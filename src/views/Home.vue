@@ -6,7 +6,6 @@
  * Here is the downloaded figma file. To download yours, type in the command line
  * node download.js.
  */
-import app from './app.json'
 
 /**
  * Import mdi fonts if you are using quant-ux designs
@@ -18,7 +17,10 @@ export default {
   name: 'Home',
   data: function() {
     return {
-      design: app,
+      design: {
+        figmaFile: "mVZlCpCETtX28ihchqIQph",
+        figmaAccessKey: "figd_1LpPbuZF6-NaaBpsmR7-38Pxb6vDnzMWPfUEiH27",
+      },
       viewModel: {
         name:'',
         result: ''
