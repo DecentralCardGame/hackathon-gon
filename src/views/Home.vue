@@ -13,14 +13,13 @@
 //import '@mdi/font/css/materialdesignicons.css'
 
 
+import axios from 'axios';
+
 export default {
   name: 'Home',
   data: function() {
     return {
-      design: {
-        figmaFile: "mVZlCpCETtX28ihchqIQph",
-        figmaAccessKey: "figd_1LpPbuZF6-NaaBpsmR7-38Pxb6vDnzMWPfUEiH27",
-      },
+      design: "a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS",
       viewModel: {
         name:'',
         result: ''
@@ -34,7 +33,47 @@ export default {
   methods: {
     sayHello () {
       this.viewModel.result = "Hello " + this.viewModel.name
+    },
+
+    graphqlReq(req, res) {
+      const options = {
+        method: 'POST',
+        url: '/api',
+        crossdomain: true,
+        withCredentials: false,
+        rejectUnauthorized: false,
+        headers: {
+        },
+        data: {
+          query: `query Tokens {
+            tokens(
+              ownerAddr: "stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh"
+            ) {
+              tokens {
+                collectionAddr
+                tokenId
+                name
+                description
+                imageUrl
+              }
+            }
+          }`
+        }
+      }
+
+      console.log(res)
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response.data); // Response
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     }
+  },
+  mounted () {
+    this.graphqlReq("yes", "yo")
   }
 }
 </script>
