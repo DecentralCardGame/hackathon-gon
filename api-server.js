@@ -1,8 +1,12 @@
-const https = require('https');
+const https = require('https')
 //require('dotenv').config();
 
-var express = require('express');
-var app = express();
+var express = require('express')
+var cors = require('cors')
+var app = express()
+
+app.use(cors())
+app.options('*', cors())
 
 app.get('/stargaze/:address', function (req, res) {
     console.log(req.params.address)

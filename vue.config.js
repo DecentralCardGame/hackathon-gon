@@ -7,6 +7,7 @@ module.exports = defineConfig({
       pathRewrite: { '^/api': '' },
       target: "https://constellations-api.mainnet.stargaze-apis.com/graphql",
       changeOrigin: true,
+      ws: true,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",

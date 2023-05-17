@@ -37,27 +37,12 @@ export default {
 
     graphqlReq(req, res) {
       const options = {
-        method: 'POST',
-        url: '/api',
-        crossdomain: true,
+        method: 'GET',
+        url: 'http://45.136.28.158:3000/stargaze/stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh',
         withCredentials: false,
         rejectUnauthorized: false,
         headers: {
-        },
-        data: {
-          query: `query Tokens {
-            tokens(
-              ownerAddr: "stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh"
-            ) {
-              tokens {
-                collectionAddr
-                tokenId
-                name
-                description
-                imageUrl
-              }
-            }
-          }`
+          'Content-Type': 'application/json'
         }
       }
 
