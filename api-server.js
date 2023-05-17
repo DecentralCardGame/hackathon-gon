@@ -45,7 +45,9 @@ app.get('/stargaze/:address', function (req, res) {
         console.log(data)
 
         if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
-            let dataRefined = JSON.parse(data).data.tokens.tokens
+            let dataRefined = {
+                NFTs: JSON.parse(data).data.tokens.tokens
+            }
             res.end( JSON.stringify(dataRefined) );
         }
         else
