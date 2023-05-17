@@ -22,7 +22,8 @@ export default {
       design: "a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS",
       viewModel: {
         name:'',
-        result: ''
+        result: '',
+        NFTs: []
       },
       config: {
       }
@@ -34,8 +35,18 @@ export default {
     sayHello () {
       this.viewModel.result = "Hello " + this.viewModel.name
     },
+    myNFTs() {
 
-    graphqlReq(req, res) {
+      console.log("NFTs:", this.viewModel.NFTs)
+
+      this.chainwarsData()
+
+      //this.$router.push({ path: '/users/eduardo' })
+
+      console.log("NFTs:", this.viewModel.NFTs)
+    },
+
+    chainwarsData() {
       const options = {
         method: 'GET',
         url: 'http://45.136.28.158:3000/stargaze/stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh',
@@ -46,11 +57,11 @@ export default {
         }
       }
 
-      console.log(res)
       axios
         .request(options)
         .then(function (response) {
-          console.log(response.data); // Response
+          console.log("response.data", response.data); // Response
+          this.viewModel.NFTs = response.data.NFTs
         })
         .catch(function (error) {
           console.error(error);
@@ -58,7 +69,7 @@ export default {
     }
   },
   mounted () {
-    this.graphqlReq("yes", "yo")
+    this.chainwarsData()
   }
 }
 </script>
