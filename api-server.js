@@ -1,12 +1,21 @@
 const https = require('https')
-//require('dotenv').config();
-
+const fs = require('fs');
 var express = require('express')
 var cors = require('cors')
+//require('dotenv').config();
+
+var key = fs.readFileSync(__dirname + '/../certs/selfsigned.key');
+var cert = fs.readFileSync(__dirname + '/../certs/selfsigned.crt');
+var options = {
+  key: key,
+  cert: cert
+};
+
 var app = express()
 
 app.use(cors())
 app.options('*', cors())
+app.options(options)
 
 app.get('/stargaze/:address', function (req, res) {
     console.log(req.params.address)
@@ -64,7 +73,7 @@ app.get('/stargaze/:address', function (req, res) {
 
 })
 
-var server = app.listen(3000, function () {
+var server = https.createServer(options, app).listen(3000, function () {
    var host = server.address().address
    var port = server.address().port
    console.log("Example app listening at http://%s:%s", host, port)

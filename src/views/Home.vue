@@ -41,7 +41,10 @@ export default {
 
       this.chainwarsData()
 
-      //this.$router.push({ path: '/users/eduardo' })
+      this.$router.push({ path: 'MY_NFTs_Locked.html' })
+
+      //MY_NFTs_Locked
+      //Start_Detailed_View
 
       console.log("NFTs:", this.viewModel.NFTs)
     },
@@ -59,16 +62,36 @@ export default {
 
       axios
         .request(options)
-        .then(function (response) {
+        .then((response) => {
           console.log("response.data", response.data); // Response
           this.viewModel.NFTs = response.data.NFTs
         })
         .catch(function (error) {
           console.error(error);
         });
+    },
+
+    async keplrMount() {
+      let chainId = "stargaze-1"
+      // Enabling before using the Keplr is recommended.
+      // This method will ask the user whether or not to allow access if they haven't visited this website.
+      // Also, it will request user to unlock the wallet if the wallet is locked.
+      await window.keplr.enable(chainId);
+
+      const offlineSigner = window.getOfflineSigner(chainId);
+
+      // You can get the address/public keys by `getAccounts` method.
+      // It can return the array of address/public key.
+      // But, currently, Keplr extension manages only one address/public key pair.
+      // XXX: This line is needed to set the sender address for SigningCosmosClient.
+      const accounts = await offlineSigner.getAccounts();
+
+      console.log(accounts)
     }
   },
   mounted () {
+    //this.keplrMount()
+
     this.chainwarsData()
   }
 }
