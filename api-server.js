@@ -3,6 +3,7 @@ const http = require('http')
 const fs = require('fs');
 var express = require('express')
 var cors = require('cors')
+var R = require('ramda')
 //require('dotenv').config();
 
 const cert = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/cert.pem');
@@ -59,8 +60,13 @@ app.get('/stargaze/:address', function (req, res) {
     graphres.on('end', () => {
         if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
             let dataRefined = JSON.parse(data).data.tokens.tokens
-		dataRefined[0].testImg = "https://crowdcontrol.network/img/keplr-logo.4e707793.png"
-		console.log(dataRefined)
+
+            dataRefined.forEach((nft) => {
+                nft.imageUrl = "https://ipfs.io/"+R.remove(4, 2, nft.imageUrl)
+            })
+
+		    dataRefined[0].testImg = "https://crowdcontrol.network/img/keplr-logo.4e707793.png"
+		    console.log(dataRefined)
             res.end( JSON.stringify(dataRefined) );
         }
         else
