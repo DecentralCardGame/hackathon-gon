@@ -1,11 +1,13 @@
 const https = require('https')
+const http = require('http')
 const fs = require('fs');
 var express = require('express')
 var cors = require('cors')
 //require('dotenv').config();
 
-var key = fs.readFileSync(__dirname + '/../certs/selfsigned.key');
-var cert = fs.readFileSync(__dirname + '/../certs/selfsigned.crt');
+const cert = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/cert.pem');
+const ca = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/chain.pem');
+const key = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/privkey.pem');
 var options = {
   key: key,
   cert: cert
@@ -55,12 +57,10 @@ app.get('/stargaze/:address', function (req, res) {
         data += d;
     });
     graphres.on('end', () => {
-        console.log(data)
-
         if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
-            let dataRefined = {
-                NFTs: JSON.parse(data).data.tokens.tokens
-            }
+            let dataRefined = JSON.parse(data).data.tokens.tokens
+		dataRefined[0].testImg = "https://crowdcontrol.network/img/keplr-logo.4e707793.png"
+		console.log(dataRefined)
             res.end( JSON.stringify(dataRefined) );
         }
         else
@@ -73,9 +73,16 @@ app.get('/stargaze/:address', function (req, res) {
 
 })
 
-var server = https.createServer(options, app).listen(3000, function () {
-   var host = server.address().address
-   var port = server.address().port
-   console.log("Example app listening at http://%s:%s", host, port)
-})
 
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(options, app);
+const httpPort = 80
+const httpsPort = 443
+
+httpServer.listen(httpPort, () => {
+        console.log('HTTP Server running on port '+httpPort);
+});
+
+httpsServer.listen(httpsPort, () => {
+        console.log('HTTPS Server running on port '+httpsPort);
+});
