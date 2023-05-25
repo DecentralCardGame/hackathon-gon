@@ -1,0 +1,7 @@
+
+createGame() {
+    return {
+        NFTs: [],
+        Chains: []
+    }
+}
