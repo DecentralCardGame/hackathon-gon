@@ -1,7 +1,0 @@
-
-createGame() {
-    return {
-        NFTs: [],
-        Chains: []
-    }
-}

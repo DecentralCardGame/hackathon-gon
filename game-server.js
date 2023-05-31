@@ -6,6 +6,14 @@ var cors = require('cors')
 var R = require('ramda')
 //require('dotenv').config();
 
+var gameEngine = require('./src/game/engine.js')
+var game = new gameEngine()
+game.addChain("Stargaze")
+game.addChain("Juno")
+game.addChain("Iris")
+
+
+/*
 const cert = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/cert.pem');
 const ca = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/chain.pem');
 const key = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/privkey.pem');
@@ -13,6 +21,7 @@ var options = {
   key: key,
   cert: cert
 };
+*/ var options = {}
 
 var app = express()
 
@@ -21,7 +30,6 @@ app.options('*', cors())
 app.options(options)
 
 app.get('/stargaze/:address', function (req, res) {
-    console.log(req.params.address)
     const data = JSON.stringify({
         query: `query Tokens {
           tokens(
@@ -52,7 +60,7 @@ app.get('/stargaze/:address', function (req, res) {
       
     const graphreq = https.request(options, (graphres) => {
     let data = '';
-    console.log(`statusCode: ${res.statusCode}`);
+    //console.log(`statusCode: ${res.statusCode}`);
     
     graphres.on('data', (d) => {
         data += d;
@@ -65,8 +73,6 @@ app.get('/stargaze/:address', function (req, res) {
                 nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
             })
 
-		    dataRefined[0].testImg = "https://crowdcontrol.network/img/keplr-logo.4e707793.png"
-		    console.log(dataRefined)
             res.end( JSON.stringify(dataRefined) );
         }
         else
@@ -79,6 +85,49 @@ app.get('/stargaze/:address', function (req, res) {
 
 })
 
+app.get('/state', function(req, res) {
+  res.send(game)
+})
+app.get('/chains', function(req, res) {
+  res.send(game.chains)
+})
+app.get('/nfts', function(req, res) {
+  res.send(game.NFTs)
+})
+app.get('/players', function(req, res) {
+  res.send(game.players)
+})
+app.post('/addNFT', (req, res) => {
+  let data = req.body;
+  console.log(req)
+  let result = game.addNFT(data.chainName, data.collection, data.tokenId, data.owner, data.NFTname, data.imageUrl, data.description)
+  if (result == 0) {
+    res.send('Success. Data Received: ' + JSON.stringify(data));
+  }
+  else {
+    res.send('FAIL with data: ' + JSON.stringify(data));
+  }
+})
+app.post('/sendDefender', (req, res) => {
+  let data = req.body;
+  game.sendDefender(data.collection, data.tokenId, data.defendChain)
+  if (result == 0) {
+    res.send('Success. Data Received: ' + JSON.stringify(data));
+  }
+  else {
+    res.send('FAIL with data: ' + JSON.stringify(data));
+  }
+})
+app.post('/sendAttacker', (req, res) => {
+  let data = req.body;
+  game.sendDefender(data.collection, data.tokenId, data.attackChain)
+  if (result == 0) {
+    res.send('Success. Data Received: ' + JSON.stringify(data));
+  }
+  else {
+    res.send('FAIL with data: ' + JSON.stringify(data));
+  }
+})
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(options, app);
