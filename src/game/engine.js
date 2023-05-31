@@ -1,11 +1,10 @@
-//import { R } from "ramda"
 let R = require("ramda")
 
 class chainWarsGame {
     constructor() {
-        this.NFTs = []
-        this.chains = []
-        this.players = []
+        this.NFTs = {}
+        this.chains = {}
+        this.players = {}
     }
     addChain(chainName) {
         this.chains[chainName] = {
