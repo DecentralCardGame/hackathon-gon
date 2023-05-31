@@ -74,7 +74,7 @@ app.get('/stargaze/:address', function (req, res) {
             let dataRefined = JSON.parse(data).data.tokens.tokens
 
             dataRefined.forEach((nft) => {
-                nft.imageUrl = "https://ipfs.io/"+R.remove(4, 2, nft.imageUrl)
+                nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
             })
 
             res.end( JSON.stringify(dataRefined) );
