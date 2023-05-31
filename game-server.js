@@ -2,6 +2,7 @@ const https = require('https')
 const http = require('http')
 const fs = require('fs');
 var express = require('express')
+var bodyParser = require('body-parser')
 var cors = require('cors')
 var R = require('ramda')
 //require('dotenv').config();
@@ -26,6 +27,9 @@ var options = {
 var app = express()
 
 app.use(cors())
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.options('*', cors())
 app.options(options)
 
@@ -98,9 +102,10 @@ app.get('/players', function(req, res) {
   res.send(game.players)
 })
 app.post('/addNFT', (req, res) => {
-  let data = req.body;
-  console.log(req)
+  let data = req.body
+  console.log(req.body)
   let result = game.addNFT(data.chainName, data.collection, data.tokenId, data.owner, data.NFTname, data.imageUrl, data.description)
+  console.log("result:", result)
   if (result == 0) {
     res.send('Success. Data Received: ' + JSON.stringify(data));
   }

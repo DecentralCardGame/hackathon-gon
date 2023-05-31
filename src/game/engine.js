@@ -30,6 +30,7 @@ class chainWarsGame {
             this.addPlayer(owner)
             this.players[owner].NFTs.push(newNFT)
             this.chains[chainName].defenders[collection+tokenId] = newNFT
+            return 0
         }
         else return -1
     }
@@ -38,6 +39,7 @@ class chainWarsGame {
             this.players[address] = {
                 NFTs: []
             }
+            return 0
         }
         else return -1
     }
@@ -77,7 +79,6 @@ class chainWarsGame {
                     console.error("Trying to switch from attacker to defender, but the NFT is not an attacker.")
                     return -1
                 }
-
             }
         }
         else return -1   
