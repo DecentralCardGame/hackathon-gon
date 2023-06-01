@@ -5,6 +5,7 @@ class chainWarsGame {
         this.NFTs = {}
         this.chains = {}
         this.players = {}
+        this.lastFight = new Date()
     }
     addChain(chainName) {
         this.chains[chainName] = {
@@ -124,6 +125,9 @@ class chainWarsGame {
         else return -1 
     }
     fight() {
+        // 10000 equals to 10s of min. waiting between fights
+        if ( new Date() - this.lastFight < 10000 ) return " Last fight is not long ago, please give the fighters some rest."
+        let report = ""
         R.forEachObjIndexed((chain, id) => {
             if (R.length(R.keys(chain.attackers)) > 0 && R.length(R.keys(chain.defenders)) > 0) {
                 // If there are attackers and defenders on a chain, zip together fight pairs
@@ -168,8 +172,15 @@ class chainWarsGame {
                 }
 
                 chain.log.push(log)
+                report += "A fight happened on "+chain.name+" chain! Check logs!"
             }
         }, this.chains)
+
+        if (report.length == 0) report = "No fight happened... Imagine there is war and nobody turns up."
+        else {
+            this.lastFight = new Date()
+        }
+        return report
     }
 }
 

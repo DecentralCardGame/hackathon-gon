@@ -104,6 +104,9 @@ app.get('/nfts', function(req, res) {
 app.get('/players', function(req, res) {
   res.send(game.players)
 })
+app.get('/fight', function(req, res) {
+  res.send(game.fight())
+})
 app.post('/addNFT', (req, res) => {
   let data = req.body
   console.log(req.body)
