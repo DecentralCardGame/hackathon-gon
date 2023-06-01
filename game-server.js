@@ -5,7 +5,9 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var R = require('ramda')
+const path = require('path')
 //require('dotenv').config();
+
 
 var gameEngine = require('./src/game/engine.js')
 var game = new gameEngine()
@@ -26,6 +28,7 @@ var options = {
 
 var app = express()
 
+app.use(express.static(path.resolve(__dirname, './dist')))
 app.use(cors())
 app.use(bodyParser.urlencoded({
   extended: true
