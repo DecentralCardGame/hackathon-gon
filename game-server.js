@@ -36,6 +36,7 @@ app.use(bodyParser.urlencoded({
 app.options('*', cors())
 app.options(options)
 
+// routes
 app.get('/stargaze/:address', function (req, res) {
     const data = JSON.stringify({
         query: `query Tokens {
@@ -51,7 +52,7 @@ app.get('/stargaze/:address', function (req, res) {
             }
           }
         }`,
-      });
+      })
       
     const options = {
     hostname: 'constellations-api.mainnet.stargaze-apis.com',
@@ -62,12 +63,11 @@ app.get('/stargaze/:address', function (req, res) {
         'Content-Type': 'application/json',
         'Content-Length': data.length,
         'User-Agent': 'Node',
-    },
-    };
+      },
+    }
       
     const graphreq = https.request(options, (graphres) => {
     let data = '';
-    //console.log(`statusCode: ${res.statusCode}`);
     
     graphres.on('data', (d) => {
         data += d;
@@ -80,16 +80,56 @@ app.get('/stargaze/:address', function (req, res) {
                 nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
             })
 
-            res.end( JSON.stringify(dataRefined) );
+            res.end(JSON.stringify(dataRefined))
         }
         else
             res.end("data is crap: "+data)
-    });
-    });
-    
-    graphreq.write(data);
-    graphreq.end();
+      })
+    })
+    graphreq.write(data)
+    graphreq.end()
+})
+app.get('/omniflix/:address', function (req, res) {
+  https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
+  let data = [];
+  const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
+  console.log('Status Code:', res.statusCode);
+  console.log('Date in Response header:', headerDate);
 
+  omnires.on('data', chunk => {
+    data.push(chunk);
+  });
+
+  omnires.on('end', () => {
+    const dataObj = JSON.parse(Buffer.concat(data).toString());
+    console.log('Response ended: ', dataObj);
+
+    res.end(JSON.stringify(dataObj))
+  });
+  }).on('error', err => {
+    console.log('Error: ', err.message);
+  });
+})
+app.get('/uptick/:address', function (req, res) {
+  https.get('https://uptick-rest.brocha.in/uptick/collection/nfts?owner='+req.params.address, (uptickres) => {
+  let data = [];
+  const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
+  console.log('Status Code:', res.statusCode);
+  console.log('Date in Response header:', headerDate);
+
+  uptickres.on('data', chunk => {
+    data.push(chunk);
+  });
+
+  uptickres.on('end', () => {
+    const dataObj = JSON.parse(Buffer.concat(data).toString());
+    console.log('Response ended: ', dataObj);
+
+    res.end(JSON.stringify(dataObj))
+  });
+  }).on('error', err => {
+    console.log('Error: ', err.message);
+  });
 })
 
 app.get('/state', function(req, res) {

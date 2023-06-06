@@ -5,6 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "preproduction": "vue-cli-service build",
+    "production": "node game-server.js",
     "test:unit": "vue-cli-service test:unit",
     "download": "node node_modules/luisa-util/lib/index.js",
     "lint": "vue-cli-service lint"

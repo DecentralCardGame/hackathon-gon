@@ -2,18 +2,9 @@
   <Luisa :design="design" :config="config" v-model="viewModel"/>
 </template>
 <script>
-/**
- * Here is the downloaded figma file. To download yours, type in the command line
- * node download.js.
- */
 
-/**
- * Import mdi fonts if you are using quant-ux designs
- */
-//import '@mdi/font/css/materialdesignicons.css'
-
-
-import axios from 'axios';
+import axios from 'axios'
+import * as R from "ramda";
 
 export default {
   name: 'Home',
@@ -22,6 +13,8 @@ export default {
       design: "a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS",
       viewModel: {
         name:'',
+        stargazeAddresses: [],
+        omniflixAddresses: [],
         result: '',
         NFTs: []
       },
@@ -41,7 +34,7 @@ export default {
 
       this.chainwarsData()
 
-      this.$router.push({ path: 'MY_NFTs_Locked.html' })
+      //this.$router.push({ path: 'MY_NFTs_Locked.html' })
 
       //MY_NFTs_Locked
       //Start_Detailed_View
@@ -52,7 +45,7 @@ export default {
     chainwarsData() {
       const options = {
         method: 'GET',
-        url: 'http://45.136.28.158:3000/stargaze/stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh',
+        url: 'https://nftarena.cc/stargaze/stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh',
         withCredentials: false,
         rejectUnauthorized: false,
         headers: {
@@ -71,26 +64,18 @@ export default {
         });
     },
 
-    async keplrMount() {
-      let chainId = "stargaze-1"
-      // Enabling before using the Keplr is recommended.
-      // This method will ask the user whether or not to allow access if they haven't visited this website.
-      // Also, it will request user to unlock the wallet if the wallet is locked.
+    async mountChain(chainId) {
       await window.keplr.enable(chainId);
-
-      const offlineSigner = window.getOfflineSigner(chainId);
-
-      // You can get the address/public keys by `getAccounts` method.
-      // It can return the array of address/public key.
-      // But, currently, Keplr extension manages only one address/public key pair.
-      // XXX: This line is needed to set the sender address for SigningCosmosClient.
-      const accounts = await offlineSigner.getAccounts();
-
-      console.log(accounts)
+      const offlineSigner = window.getOfflineSigner(chainId)
+      const accounts = await offlineSigner.getAccounts()
+      return R.pluck('address', accounts)
     }
   },
   mounted () {
-    //this.keplrMount()
+    this.stargazeAddresses = this.mountChain('stargaze-1')
+    console.log("stargaze:", this.stargazeAddresses)
+    this.omniflixAddresses = this.mountChain('omniflixhub-1')
+    console.log("omniflix:", this.omniflixAddresses)
 
     this.chainwarsData()
   }
