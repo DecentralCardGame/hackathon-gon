@@ -74,13 +74,14 @@ app.get('/stargaze/:address', function (req, res) {
     });
     graphres.on('end', () => {
         if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
-            let dataRefined = JSON.parse(data).data.tokens.tokens
+            let dataObj = JSON.parse(data).data.tokens.tokens
 
-            dataRefined.forEach((nft) => {
+            dataObj.forEach((nft) => {
                 nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
+                game.addNFT("Stargaze", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
             })
 
-            res.end(JSON.stringify(dataRefined))
+            res.end(JSON.stringify(dataObj))
         }
         else
             res.end("data is crap: "+data)
@@ -88,6 +89,54 @@ app.get('/stargaze/:address', function (req, res) {
     })
     graphreq.write(data)
     graphreq.end()
+})
+app.get('/iris/:address', function (req, res) {
+  const data = JSON.stringify({
+    "pageSize": "20",
+    "pageNumber": "1",
+    "owner": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
+    "filterType": "0",
+    "did": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
+    "authenticationAddress": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
+    "chainType": "IRIS_IRISHUB",
+    "lang": "en",
+    "mobileVersion": "1.3.2"
+    })
+    
+  const options = {
+  hostname: 'web.upticknft.com',
+  path: '/uptickapi1/homepage/getMyTokenId.json',
+  port: 443,
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': data.length,
+      'User-Agent': 'Node',
+    },
+  }
+
+  const irisreq = https.request(options, (irisres) => {
+  let data = '';
+
+  irisres.on('data', (d) => {
+      data += d;
+  });
+  irisres.on('end', () => {
+      if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
+          let dataRefined = JSON.parse(data).data.tokens.tokens
+
+          dataRefined.forEach((nft) => {
+              nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
+          })
+
+          res.end(JSON.stringify(dataRefined))
+      }
+      else
+          res.end("data is crap: "+data)
+    })
+  })
+  irisreq.write(data)
+  irisreq.end()
 })
 app.get('/omniflix/:address', function (req, res) {
   https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
@@ -101,14 +150,22 @@ app.get('/omniflix/:address', function (req, res) {
   });
 
   omnires.on('end', () => {
-    const dataObj = JSON.parse(Buffer.concat(data).toString());
-    console.log('Response ended: ', dataObj);
-
-    res.end(JSON.stringify(dataObj))
-  });
+    const dataObj = JSON.parse(Buffer.concat(data).toString()).result.list;
+    
+    let resObj = R.map(x => { return {
+      "collectionAddr": dataObj[0].denom_id,
+      "tokenId": dataObj[0].id,
+      "name": dataObj[0].name,
+      "description": dataObj[0].description,
+      "imageUrl": R.replace('ipfs://', 'https://ipfs.io/ipfs/', dataObj[0].media_uri)
+    }}, dataObj)
+    
+    game.addNFT(data.chainName, data.collection, data.tokenId, data.owner, data.NFTname, data.imageUrl, data.description)
+    res.end(JSON.stringify(resObj))
+  })
   }).on('error', err => {
     console.log('Error: ', err.message);
-  });
+  })
 })
 app.get('/uptick/:address', function (req, res) {
   https.get('https://uptick-rest.brocha.in/uptick/collection/nfts?owner='+req.params.address, (uptickres) => {
@@ -147,6 +204,7 @@ app.get('/players', function(req, res) {
 app.get('/fight', function(req, res) {
   res.send(game.fight())
 })
+/*
 app.post('/addNFT', (req, res) => {
   let data = req.body
   console.log(req.body)
@@ -159,6 +217,7 @@ app.post('/addNFT', (req, res) => {
     res.send('FAIL with data: ' + JSON.stringify(data));
   }
 })
+*/
 app.post('/sendDefender', (req, res) => {
   let data = req.body;
   game.sendDefender(data.collection, data.tokenId, data.defendChain)

@@ -17,7 +17,7 @@ class chainWarsGame {
         }
     }
     addNFT(chainName, collection, tokenId, owner, NFTname, imageUrl, description) {
-        if (!this.NFTs[collection+tokenId]) {
+        if (!this.NFTs[collection.toString()+tokenId.toString()]) {
             let newNFT = {
                 originChain: chainName,
                 deployed: chainName,
@@ -27,10 +27,10 @@ class chainWarsGame {
                 description: description,
                 alive: true
             }
-            this.NFTs[collection+tokenId] = newNFT
+            this.NFTs[collection.toString()+tokenId.toString()] = newNFT
             this.addPlayer(owner)
             this.players[owner].NFTs.push(newNFT)
-            this.chains[chainName].defenders[collection+tokenId] = newNFT
+            this.chains[chainName].defenders[collection.toString()+tokenId.toString()] = newNFT
             return 0
         }
         else return -1
@@ -45,21 +45,21 @@ class chainWarsGame {
         else return -1
     }
     sendDefender(collection, tokenId, defendChain) {
-        let defender = this.NFTs[collection+tokenId]
+        let defender = this.NFTs[collection.toString()+tokenId.toString()]
         if (defender.alive) {
             // check if NFT is moved to another chain
             if (defender.deployed != defendChain) {
                 // remove the NFT from its deployed chain, check for attackers and defenders
-                if (this.chains[defender.deployed].defenders[collection+tokenId]) {
-                    delete this.chains[defender.deployed].defenders[collection+tokenId]
+                if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
+                    delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as defender on new chain
-                    this.chains[defendChain].defenders[collection+tokenId] = defender
+                    this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
                     return 0
                 }
-                else if (this.chains[defender.deployed].attackers[collection+tokenId]) {
-                    delete this.chains[defender.deployed].attackers[collection+tokenId]
+                else if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
+                    delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as defender on new chain
-                    this.chains[defendChain].defenders[collection+tokenId] = defender
+                    this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
                     return 0
                 }
                 else {
@@ -69,11 +69,11 @@ class chainWarsGame {
             }
             // for same chain, it is just a switch to defenders
             else {
-                if (this.chains[defender.deployed].defenders[collection+tokenId]) return -1
-                if (this.chains[defender.deployed].attackers[collection+tokenId]) {
+                if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) return -1
+                if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     // the NFT only changes from attacker to defender
-                    delete this.chains[defender.deployed].attackers[collection+tokenId]
-                    this.chains[defendChain].defenders[collection+tokenId] = defender
+                    delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
+                    this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
                     return 0
                 }
                 else {
@@ -85,21 +85,21 @@ class chainWarsGame {
         else return -1   
     }
     sendAttacker(collection, tokenId, attackChain) {
-        let attacker = this.NFTs[collection+tokenId]
+        let attacker = this.NFTs[collection.toString()+tokenId.toString()]
         if (attacker.alive && attackChain != attacker.originChain) {
             // check if NFT is moved to another chain
             if (attacker.deployed != attackChain) {
                 // remove the NFT from its deployed chain, check for attackers and defenders
-                if (this.chains[attacker.deployed].defenders[collection+tokenId]) {
-                    delete this.chains[attacker.deployed].defenders[collection+tokenId]
+                if (this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
+                    delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as attacker on new chain
-                    this.chains[attackChain].attackers[collection+tokenId] = attacker
+                    this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
                     return 0
                 }
-                else if (this.chains[attacker.deployed].attackers[collection+tokenId]) {
-                    delete this.chains[attacker.deployed].attackers[collection+tokenId]
+                else if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
+                    delete this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as attacker on new chain
-                    this.chains[attackChain].attackers[collection+tokenId] = attacker
+                    this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
                     return 0
                 }
                 else {
@@ -109,11 +109,11 @@ class chainWarsGame {
             }
             // for same chain, it is just a switch to attackers
             else {
-                if (this.chains[attacker.deployed].attackers[collection+tokenId]) return -1
-                if (this.chains[attacker.deployed].defenders[collection+tokenId]) {
+                if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) return -1
+                if (this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     // the NFT only changes from defender to attacker
-                    delete this.chains[attacker.deployed].defenders[collection+tokenId]
-                    this.chains[attackChain].attackers[collection+tokenId] = attacker
+                    delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
+                    this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
                     return 0
                 }
                 else {
