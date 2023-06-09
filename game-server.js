@@ -12,7 +12,7 @@ const path = require('path')
 var gameEngine = require('./src/game/engine.js')
 var game = new gameEngine()
 game.addChain("Stargaze")
-game.addChain("Juno")
+game.addChain("Omniflix")
 game.addChain("Iris")
 
 
@@ -37,6 +37,42 @@ app.options('*', cors())
 app.options(options)
 
 // routes
+
+function postRequest(options, data, callback) {
+  const req = https.request(options, (res) => {
+    let data = '';
+    
+    res.on('data', (d) => {
+        data += d;
+    });
+    res.on('end', () => {
+        callback(data)
+      })
+    })
+  req.write(data)
+  req.end()
+}
+
+function getRequest(route, callback) {
+  return new Promise(function(resolve, reject) {
+    https.get(route, (res) => {
+      let data = [];
+      console.log('Status Code:', res.statusCode);
+  
+      res.on('data', chunk => {
+        data.push(chunk);
+      });
+  
+      res.on('end', () => {
+        resolve(callback(JSON.parse(Buffer.concat(data).toString())))
+      })
+    }).on('error', err => {
+      console.log('Error: ', err.message);
+      reject(err.message)
+    })
+  })
+}
+
 app.get('/stargaze/:address', function (req, res) {
     const data = JSON.stringify({
         query: `query Tokens {
@@ -141,9 +177,7 @@ app.get('/iris/:address', function (req, res) {
 app.get('/omniflix/:address', function (req, res) {
   https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
   let data = [];
-  const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
   console.log('Status Code:', res.statusCode);
-  console.log('Date in Response header:', headerDate);
 
   omnires.on('data', chunk => {
     data.push(chunk);
@@ -152,15 +186,20 @@ app.get('/omniflix/:address', function (req, res) {
   omnires.on('end', () => {
     const dataObj = JSON.parse(Buffer.concat(data).toString()).result.list;
     
-    let resObj = R.map(x => { return {
-      "collectionAddr": dataObj[0].denom_id,
-      "tokenId": dataObj[0].id,
-      "name": dataObj[0].name,
-      "description": dataObj[0].description,
-      "imageUrl": R.replace('ipfs://', 'https://ipfs.io/ipfs/', dataObj[0].media_uri)
+    let resObj = R.map(nft => {
+      return {
+      "collectionAddr": nft.denom_id,
+      "tokenId": nft.id,
+      "name": nft.name,
+      "description": nft.description,
+      "imageUrl": R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.media_uri)
     }}, dataObj)
     
-    game.addNFT(data.chainName, data.collection, data.tokenId, data.owner, data.NFTname, data.imageUrl, data.description)
+    console.log(resObj)
+    R.map(x => {
+      game.addNFT("Omniflix", x.collectionAddr, x.tokenId, req.params.address, x.name, x.imageUrl, x.description) 
+    }, resObj)
+
     res.end(JSON.stringify(resObj))
   })
   }).on('error', err => {
@@ -168,25 +207,40 @@ app.get('/omniflix/:address', function (req, res) {
   })
 })
 app.get('/uptick/:address', function (req, res) {
-  https.get('https://uptick-rest.brocha.in/uptick/collection/nfts?owner='+req.params.address, (uptickres) => {
+  https.get('https://api.irishub-1.irisnet.org/irismod/nft/nfts?owner='+req.params.address, (uptickres) => {
   let data = [];
-  const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
-  console.log('Status Code:', res.statusCode);
-  console.log('Date in Response header:', headerDate);
 
   uptickres.on('data', chunk => {
     data.push(chunk);
   });
 
   uptickres.on('end', () => {
-    const dataObj = JSON.parse(Buffer.concat(data).toString());
+    const dataObj = JSON.parse(Buffer.concat(data).toString()).owner.id_collections;
     console.log('Response ended: ', dataObj);
 
-    res.end(JSON.stringify(dataObj))
-  });
+    let resObj = R.flatten(R.map(collection => {
+      return R.map(token_id => {
+        return getRequest('https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft => {
+          return getRequest(resNft.nft.uri, resContent => {
+            return {
+              "collectionAddr": collection.denom_id,
+              "tokenId": resNft.nft.id,
+              "name": resNft.nft.name,
+              "description": resContent.description,
+              "imageUrl": resContent.image
+            }
+          })
+        })
+      }, collection.token_ids)
+    }, dataObj))
+    
+    Promise.all(resObj).then((nfts) => {
+      res.end(JSON.stringify(nfts))
+    })
+  })
   }).on('error', err => {
-    console.log('Error: ', err.message);
-  });
+    console.log('Error: ', err.message)
+  })
 })
 
 app.get('/state', function(req, res) {
@@ -245,9 +299,9 @@ const httpPort = 80
 const httpsPort = 443
 
 httpServer.listen(httpPort, () => {
-        console.log('HTTP Server running on port '+httpPort);
+  console.log('HTTP Server running on port '+httpPort);
 });
 
 httpsServer.listen(httpsPort, () => {
-        console.log('HTTPS Server running on port '+httpsPort);
+  console.log('HTTPS Server running on port '+httpsPort);
 });
