@@ -15,6 +15,7 @@ export default {
         name:'',
         stargazeAddresses: [],
         omniflixAddresses: [],
+        irisAddresses: [],
         result: '',
         NFTs: []
       },
@@ -43,9 +44,10 @@ export default {
     },
 
     chainwarsData() {
+      console.log("requesting chain data")
       const options = {
         method: 'GET',
-        url: 'https://nftarena.cc/stargaze/stars1awpflkaj937pkn6ws5f048hhf7jwjg8fc7scfh',
+        url: '',
         withCredentials: false,
         rejectUnauthorized: false,
         headers: {
@@ -53,30 +55,63 @@ export default {
         }
       }
 
-      axios
-        .request(options)
-        .then((response) => {
-          console.log("response.data", response.data); // Response
-          this.viewModel.NFTs = response.data.NFTs
+      let requestData = (url) => {
+        options.url = url
+        axios
+          .request(options)
+          .then((response) => {
+            console.log("response.data", response.data); // Response
+            this.viewModel.NFTs.push(response.data.NFTs)
+          })
+          .catch(function (error) {
+            console.error(error)
+          })
+      }
+
+      
+      this.stargazeAddresses.then(addresses => {
+        console.log("requesting stargaze:", this.stargazeAddresses)
+        addresses.forEach(address => {
+          requestData('https://nftarena.cc/stargaze/'+address)
         })
-        .catch(function (error) {
-          console.error(error);
-        });
+      })
+      this.omniflixAddresses.then(addresses => {
+        console.log("requesting omniflix:", this.omniflixAddresses)
+        addresses.forEach(address => {
+          requestData('https://nftarena.cc/omniflix/'+address)
+        })
+      })
+      this.irisAddresses.then(addresses => {
+        console.log("requesting iris:", this.irisAddresses)
+        addresses.forEach(address => {
+          requestData('https://nftarena.cc/uptick/'+address)
+        })
+      })
     },
 
     async mountChain(chainId) {
-      await window.keplr.enable(chainId);
+      await window.keplr.enable(chainId)
       const offlineSigner = window.getOfflineSigner(chainId)
       const accounts = await offlineSigner.getAccounts()
-      return R.pluck('address', accounts)
+      return new Promise(function(resolve, reject) {
+        try {
+          console.log("address:", R.pluck('address', accounts))
+          resolve(R.pluck('address', accounts))
+        }
+        catch (error) {
+          console.error("mountChain failed for", chainId, "with error", error)
+          reject([])
+        }
+      })
     }
   },
   mounted () {
+    // here we load all the addresses from the keplr wallet with given chain ids
     this.stargazeAddresses = this.mountChain('stargaze-1')
-    console.log("stargaze:", this.stargazeAddresses)
     this.omniflixAddresses = this.mountChain('omniflixhub-1')
-    console.log("omniflix:", this.omniflixAddresses)
+    this.irisAddresses = this.mountChain('irishub-1')
 
+    // then we want to do all the get requests to the chain's APIs
     this.chainwarsData()
   }
 }
