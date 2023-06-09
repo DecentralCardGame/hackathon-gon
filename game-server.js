@@ -233,6 +233,8 @@ app.get('/uptick/:address', function (req, res) {
     let resObj = R.flatten(R.map(collection => {
       return R.map(token_id => {
         return getRequest('https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft => {
+          console.log('resNFT from https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft)
+          console.log("requesting", resNft.nft.uri)
           return getRequest(resNft.nft.uri, resContent => {
             return {
               "collectionAddr": collection.denom_id,
