@@ -15,8 +15,6 @@ game.addChain("Stargaze")
 game.addChain("Omniflix")
 game.addChain("Uptick")
 
-
-/*
 const cert = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/cert.pem');
 const ca = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/chain.pem');
 const key = fs.readFileSync('/etc/letsencrypt/live/nftarena.cc/privkey.pem');
@@ -24,7 +22,6 @@ var options = {
   key: key,
   cert: cert
 };
-*/ var options = {}
 
 var app = express()
 
