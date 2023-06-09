@@ -13,7 +13,7 @@ var gameEngine = require('./src/game/engine.js')
 var game = new gameEngine()
 game.addChain("Stargaze")
 game.addChain("Omniflix")
-game.addChain("Iris")
+game.addChain("Uptick")
 
 
 /*
@@ -235,6 +235,9 @@ app.get('/uptick/:address', function (req, res) {
     }, dataObj))
     
     Promise.all(resObj).then((nfts) => {
+      R.map(nft => {
+        game.addNFT("Uptick", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
+      }, nfts)
       res.end(JSON.stringify(nfts))
     })
   })
