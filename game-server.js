@@ -55,7 +55,7 @@ function postRequest(options, data, callback) {
 
 function getRequest(route, callback) {
   return new Promise(function(resolve, reject) {
-    https.get(route, (res) => {
+    let handleGet = (res) => {
       let data = [];
       console.log('Status Code:', res.statusCode);
   
@@ -66,10 +66,22 @@ function getRequest(route, callback) {
       res.on('end', () => {
         resolve(callback(JSON.parse(Buffer.concat(data).toString())))
       })
-    }).on('error', err => {
-      console.log('Error: ', err.message);
-      reject(err.message)
-    })
+    }
+  
+    if (route[4] == 's') {
+      https.get(route, handleGet)
+      .on('error', err => {
+        console.log('Error (https): ', err.message);
+        reject(err.message)
+      })
+    }
+    else {
+      http.get(route, handleGet)
+      .on('error', err => {
+        console.log('Error (http): ', err.message);
+        reject(err.message)
+      })
+    }  
   })
 }
 
