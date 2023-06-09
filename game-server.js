@@ -68,19 +68,22 @@ function getRequest(route, callback) {
       })
     }
   
-    if (route[4] == 's') {
+    if (route.startsWith('https')) {
       https.get(route, handleGet)
       .on('error', err => {
         console.log('Error (https): ', err.message);
         reject(err.message)
       })
     }
-    else {
+    else if (route.startsWith('http')) {
       http.get(route, handleGet)
       .on('error', err => {
         console.log('Error (http): ', err.message);
         reject(err.message)
       })
+    }
+    else {
+      reject("non requestable route "+route)
     }  
   })
 }
@@ -235,7 +238,16 @@ app.get('/uptick/:address', function (req, res) {
         return getRequest('https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft => {
           console.log('resNFT from https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft)
           console.log("requesting", resNft.nft.uri)
-          return getRequest(resNft.nft.uri, resContent => {
+          if (!resNft.nft.uri.startsWith('http')) {
+            return {
+              "collectionAddr": collection.denom_id,
+              "tokenId": resNft.nft.id,
+              "name": resNft.nft.name,
+              "description": resNft.data,
+              "imageUrl": 'https://d3i65oqeoaoxhj.cloudfront.net/'+resNft.uri+'/small'
+            }
+          }
+          else return getRequest(resNft.nft.uri, resContent => {
             return {
               "collectionAddr": collection.denom_id,
               "tokenId": resNft.nft.id,
