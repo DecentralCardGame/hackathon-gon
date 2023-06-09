@@ -57,8 +57,8 @@ function getRequest(route, callback) {
   return new Promise(function(resolve, reject) {
     let handleGet = (res) => {
       let data = [];
-      console.log('Status Code:', res.statusCode);
-  
+      console.log('Status Code:', res.statusCode, 'Route: ', route);
+
       res.on('data', chunk => {
         data.push(chunk);
       });
@@ -236,8 +236,7 @@ app.get('/uptick/:address', function (req, res) {
     let resObj = R.flatten(R.map(collection => {
       return R.map(token_id => {
         return getRequest('https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft => {
-          console.log('resNFT from https://api.irishub-1.irisnet.org/irismod/nft/nfts/'+collection.denom_id+'/'+token_id, resNft)
-          console.log("requesting", resNft.nft.uri)
+          // somehow uptick has 3 different formats how uri of nft can be returned
           if (!resNft.nft.uri.startsWith('http')) {
             return {
               "collectionAddr": collection.denom_id,
@@ -247,15 +246,28 @@ app.get('/uptick/:address', function (req, res) {
               "imageUrl": 'https://d3i65oqeoaoxhj.cloudfront.net/'+resNft.uri+'/small'
             }
           }
-          else return getRequest(resNft.nft.uri, resContent => {
+          // if uri ends with .json, we need to do another http get for the real img url
+          else if (resNft.nft.uri.endsWith('.json')) {
+            return getRequest(resNft.nft.uri, resContent => {
+              return {
+                "collectionAddr": collection.denom_id,
+                "tokenId": resNft.nft.id,
+                "name": resNft.nft.name,
+                "description": resContent.description,
+                "imageUrl": resContent.image
+              }
+            })
+          }
+          // if it does start with http and does not end with .json, the uri can be directly used
+          else {
             return {
               "collectionAddr": collection.denom_id,
               "tokenId": resNft.nft.id,
               "name": resNft.nft.name,
-              "description": resContent.description,
-              "imageUrl": resContent.image
+              "description": "",
+              "imageUrl": resNft.nft.uri
             }
-          })
+          }
         })
       }, collection.token_ids)
     }, dataObj))
