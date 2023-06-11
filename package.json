@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "graphql": "^16.6.0",
     "graphql-request": "^6.0.0",
-    "luisa-vue": "^3.0.32",
+    "luisa-vue": "^3.0.33",
     "path": "^0.12.7",
     "ramda": "^0.29.0",
     "vue": "^3.2.13",
