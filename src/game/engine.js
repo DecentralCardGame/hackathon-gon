@@ -31,9 +31,9 @@ class chainWarsGame {
             this.addPlayer(owner)
             this.players[owner].NFTs.push(newNFT)
             this.chains[chainName].defenders[collection.toString()+tokenId.toString()] = newNFT
-            return 0
+            return newNFT
         }
-        else return -1
+        else return this.NFTs[collection.toString()+tokenId.toString()]
     }
     addPlayer(address) {
         if (!this.players[address]) {
@@ -54,12 +54,16 @@ class chainWarsGame {
                     delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as defender on new chain
                     this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
+                    // also set deploy chain on nft itself
+                    defender.deployed = defendChain
                     return 0
                 }
                 else if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as defender on new chain
                     this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
+                    // also set deploy chain on nft itself
+                    defender.deployed = defendChain
                     return 0
                 }
                 else {
@@ -67,7 +71,7 @@ class chainWarsGame {
                     return -1
                 }
             }
-            // for same chain, it is just a switch to defenders
+            // if nft stays on the same chain, it is just a switch to defenders
             else {
                 if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) return -1
                 if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
@@ -94,12 +98,16 @@ class chainWarsGame {
                     delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as attacker on new chain
                     this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
+                    // also set deploy chain on nft itself
+                    attacker.deployed = attackChain
                     return 0
                 }
                 else if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]
                     // after deleting from old chain, add as attacker on new chain
                     this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
+                    // also set deploy chain on nft itself
+                    attacker.deployed = attackChain
                     return 0
                 }
                 else {

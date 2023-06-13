@@ -36,8 +36,8 @@ app.use(bodyParser.urlencoded({
 app.options('*', cors())
 app.options(options)
 
-// routes
 
+// request handlers
 function postRequest(options, data, callback) {
   const req = https.request(options, (res) => {
     let data = '';
@@ -88,6 +88,7 @@ function getRequest(route, callback) {
   })
 }
 
+// routes
 app.get('/stargaze/:address', function (req, res) {
     const data = JSON.stringify({
         query: `query Tokens {
@@ -127,12 +128,12 @@ app.get('/stargaze/:address', function (req, res) {
         if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
             let dataObj = JSON.parse(data).data.tokens.tokens
 
-            dataObj.forEach((nft) => {
+            resObj = R.map(nft => {
                 nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
                 game.addNFT("Stargaze", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
-            })
+            }, dataObj)
 
-            res.end(JSON.stringify(dataObj))
+            res.end(JSON.stringify(resObj))
         }
         else
             res.end("data is crap: "+data)
@@ -141,6 +142,7 @@ app.get('/stargaze/:address', function (req, res) {
     graphreq.write(data)
     graphreq.end()
 })
+/*
 app.get('/iris/:address', function (req, res) {
   const data = JSON.stringify({
     "pageSize": "20",
@@ -189,6 +191,7 @@ app.get('/iris/:address', function (req, res) {
   irisreq.write(data)
   irisreq.end()
 })
+*/
 app.get('/omniflix/:address', function (req, res) {
   https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
   let data = [];
@@ -211,8 +214,8 @@ app.get('/omniflix/:address', function (req, res) {
     }}, dataObj)
     
     console.log(resObj)
-    R.map(x => {
-      game.addNFT("Omniflix", x.collectionAddr, x.tokenId, req.params.address, x.name, x.imageUrl, x.description) 
+    resObj = R.map(x => {
+      return game.addNFT("Omniflix", x.collectionAddr, x.tokenId, req.params.address, x.name, x.imageUrl, x.description) 
     }, resObj)
 
     res.end(JSON.stringify(resObj))
@@ -273,8 +276,8 @@ app.get('/uptick/:address', function (req, res) {
     }, dataObj))
     
     Promise.all(resObj).then((nfts) => {
-      R.map(nft => {
-        game.addNFT("Uptick", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
+      nfts = R.map(nft => {
+        return game.addNFT("Uptick", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
       }, nfts)
       res.end(JSON.stringify(nfts))
     })
@@ -299,20 +302,6 @@ app.get('/players', function(req, res) {
 app.get('/fight', function(req, res) {
   res.send(game.fight())
 })
-/*
-app.post('/addNFT', (req, res) => {
-  let data = req.body
-  console.log(req.body)
-  let result = game.addNFT(data.chainName, data.collection, data.tokenId, data.owner, data.NFTname, data.imageUrl, data.description)
-  console.log("result:", result)
-  if (result == 0) {
-    res.send('Success. Data Received: ' + JSON.stringify(data));
-  }
-  else {
-    res.send('FAIL with data: ' + JSON.stringify(data));
-  }
-})
-*/
 app.post('/sendDefender', (req, res) => {
   let data = req.body;
   game.sendDefender(data.collection, data.tokenId, data.defendChain)
