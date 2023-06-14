@@ -67,6 +67,7 @@ class chainWarsGame {
 
             // after deleting from old chain, add as defender on new chain
             this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
+            console.log("chains after add", this.chains[defendChain])
             // also set deploy chain on nft itself
             defender.deployed = defendChain
             return "success"
