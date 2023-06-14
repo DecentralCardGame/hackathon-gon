@@ -134,7 +134,7 @@ export default {
     async sendDefender() {
       console.log("defending", this.targetChain)
       this.defend = false
-      const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
+      const {data} = await axios.post('https://nftarena.cc/sendDefender', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
           attackChain: this.targetChain
