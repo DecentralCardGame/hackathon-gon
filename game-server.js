@@ -304,12 +304,12 @@ app.get('/fight', function(req, res) {
 app.post('/sendDefender', (req, res) => {
   let data = req.body
   let result = game.sendDefender(data.collection, data.tokenId, data.defendChain)
-  res.send(result)
+  res.status(200).send(result)
 })
 app.post('/sendAttacker', (req, res) => {
   let data = req.body
   let result = game.sendDefender(data.collection, data.tokenId, data.attackChain)
-  res.send(result)
+  res.status(200).send(result)
 })
 
 const httpServer = http.createServer(app)

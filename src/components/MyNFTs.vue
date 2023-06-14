@@ -269,7 +269,7 @@ export default {
 .MyNFTs .Grid .qux-repeater-child{  
     
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, 200px);
     grid-template-rows: auto;
     aspect-ratio: 1;
 
