@@ -130,7 +130,7 @@ app.get('/stargaze/:address', function (req, res) {
 
             resObj = R.map(nft => {
                 nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
-                game.addNFT("Stargaze", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
+                return game.addNFT("Stargaze", nft.collectionAddr, nft.tokenId, req.params.address, nft.name, nft.imageUrl, nft.description)
             }, dataObj)
 
             res.end(JSON.stringify(resObj))

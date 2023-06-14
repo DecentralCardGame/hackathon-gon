@@ -46,10 +46,14 @@
                     clickedIndex = index;
                     nftClicked(index);
                 ">
-                    <img class="nftimage"
+                    <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
                         :id="index"
                         :src="nft.imageUrl"
                     />
+                    <video v-if="isVideo(nft.imageUrl)" class="nftimage"
+                        :id="index">
+                        <source :src="nft.imageUrl" type="video/mp4">
+                    </video>
                 </li>
             </ul>
         </div>
@@ -86,6 +90,10 @@ export default {
     this.chainwarsData()
   },
   methods: {
+    isVideo(src) {
+      console.log("called isvideo with", src)
+      return src.endsWith(".mp4")
+    },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
         console.log(this.selectedNFT)
@@ -102,15 +110,14 @@ export default {
         }
       }
 
-      let requestData = (url, chain) => {
+      let requestData = (url) => {
+        console.log("requesting", url)
         options.url = url
         axios
           .request(options)
           .then((response) => {
             R.map(nft => {
-                if (nft) {
-                    this.NFTs.push(nft)
-                }
+                if (nft) this.NFTs.push(nft)
             }, response.data)
             
             console.log("NFTs", this.NFTs)
@@ -121,19 +128,16 @@ export default {
       }
 
       this.stargazeAddresses.then(addresses => {
-        console.log("requesting stargaze:", this.stargazeAddresses)
         addresses.forEach(address => {
           requestData('https://nftarena.cc/stargaze/'+address, "Stargaze")
         })
       })
       this.omniflixAddresses.then(addresses => {
-        console.log("requesting omniflix:", this.omniflixAddresses)
         addresses.forEach(address => {
           requestData('https://nftarena.cc/omniflix/'+address, "Omniflix")
         })
       })
       this.irisAddresses.then(addresses => {
-        console.log("requesting iris:", this.irisAddresses)
         addresses.forEach(address => {
           requestData('https://nftarena.cc/uptick/'+address, "Uptick")
         })
