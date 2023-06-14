@@ -58,7 +58,7 @@ class chainWarsGame {
                     this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
                     // also set deploy chain on nft itself
                     defender.deployed = defendChain
-                    return 0
+                    return "success"
                 }
                 else if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
@@ -66,11 +66,12 @@ class chainWarsGame {
                     this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
                     // also set deploy chain on nft itself
                     defender.deployed = defendChain
-                    return 0
+                    return "success"
                 }
                 else {
-                    console.error("Trying to remove a NFT from a chain, but it is neither attacker nor defender")
-                    return -1
+                    let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
+                    console.error(error)
+                    return error
                 }
             }
             // if nft stays on the same chain, it is just a switch to defenders
@@ -80,19 +81,20 @@ class chainWarsGame {
                     // the NFT only changes from attacker to defender
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
                     this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
-                    return 0
+                    return "success"
                 }
                 else {
-                    console.error("Trying to switch from attacker to defender, but the NFT is not an attacker.")
-                    return -1
+                    let error = "Trying to switch from attacker to defender, but the NFT is not an attacker."
+                    console.error(error)
+                    return error
                 }
             }
         }
-        else return -1   
+        else return "Please allow the dead some rest."
     }
     sendAttacker(collection, tokenId, attackChain) {
         let attacker = this.NFTs[collection.toString()+tokenId.toString()]
-        if (attacker.alive && attackChain != attacker.originChain) {
+        if (attacker.alive) {
             // check if NFT is moved to another chain
             if (attacker.deployed != attackChain) {
                 // remove the NFT from its deployed chain, check for attackers and defenders
@@ -102,7 +104,7 @@ class chainWarsGame {
                     this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
                     // also set deploy chain on nft itself
                     attacker.deployed = attackChain
-                    return 0
+                    return "success"
                 }
                 else if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]
@@ -110,11 +112,12 @@ class chainWarsGame {
                     this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
                     // also set deploy chain on nft itself
                     attacker.deployed = attackChain
-                    return 0
+                    return "success"
                 }
                 else {
-                    console.error("Trying to remove a NFT from a chain, but it is neither attacker nor defender")
-                    return -1
+                    let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
+                    console.error(error)
+                    return error
                 }
             }
             // for same chain, it is just a switch to attackers
@@ -124,15 +127,18 @@ class chainWarsGame {
                     // the NFT only changes from defender to attacker
                     delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
                     this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
-                    return 0
+                    return "success"
                 }
                 else {
-                    console.error("Trying to switch from attacker to defender, but the NFT is not an attacker.")
-                    return -1
+                    let error = "Trying to switch from attacker to defender, but the NFT is not an attacker."
+                    console.error(error)
+                    return error
                 }
             }
         }
-        else return -1 
+        else if (attackChain != attacker.originChain)
+            return "You cannot attack your home chain!"
+        else return "Please allow the dead some rest."
     }
     fight() {
         // 10000 equals to 10s of min. waiting between fights

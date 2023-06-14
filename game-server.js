@@ -194,8 +194,7 @@ app.get('/iris/:address', function (req, res) {
 */
 app.get('/omniflix/:address', function (req, res) {
   https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
-  let data = [];
-  console.log('Status Code:', res.statusCode);
+  let data = []
 
   omnires.on('data', chunk => {
     data.push(chunk);
@@ -303,35 +302,25 @@ app.get('/fight', function(req, res) {
   res.send(game.fight())
 })
 app.post('/sendDefender', (req, res) => {
-  let data = req.body;
+  let data = req.body
   let result = game.sendDefender(data.collection, data.tokenId, data.defendChain)
-  if (result == 0) {
-    res.send('Success. Data Received: ' + JSON.stringify(data));
-  }
-  else {
-    res.send('FAIL with data: ' + JSON.stringify(data));
-  }
+  res.send(result)
 })
 app.post('/sendAttacker', (req, res) => {
-  let data = req.body;
+  let data = req.body
   let result = game.sendDefender(data.collection, data.tokenId, data.attackChain)
-  if (result == 0) {
-    res.send('Success. Data Received: ' + JSON.stringify(data));
-  }
-  else {
-    res.send('FAIL with data: ' + JSON.stringify(data));
-  }
+  res.send(result)
 })
 
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(options, app);
-const httpPort = 80
+const httpServer = http.createServer(app)
+const httpsServer = https.createServer(options, app)
+const httpPort = 8
 const httpsPort = 443
 
 httpServer.listen(httpPort, () => {
-  console.log('HTTP Server running on port '+httpPort);
+  console.log('HTTP Server running on port '+httpPort)
 });
 
 httpsServer.listen(httpsPort, () => {
-  console.log('HTTPS Server running on port '+httpsPort);
+  console.log('HTTPS Server running on port '+httpsPort)
 });

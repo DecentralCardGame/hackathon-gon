@@ -19,13 +19,12 @@
                     <button v-if="!attack && !defend" @click="defend = true">Defend</button>
                     
                     <button v-if="attack" @click="targetChain = 'Uptick';sendAttacker()">Attack Uptick</button>
-                    <button v-if="attack" @click="targetChain = 'Stargaze';sendAttacker">Attack Stargaze</button>
-                    <button v-if="attack" @click="targetChain = 'Omniflix';sendAttacker">Attack Omniflix</button>
-                    <button v-if="defend" @click="targetChain = 'Uptick';sendDefender">Defend Uptick</button>
-                    <button v-if="defend" @click="targetChain = 'Stargaze';sendDefender">Defend Stargaze</button>
-                    <button v-if="defend" @click="targetChain = 'Omniflix';sendDefender">Defend Omniflix</button>
+                    <button v-if="attack" @click="targetChain = 'Stargaze';sendAttacker()">Attack Stargaze</button>
+                    <button v-if="attack" @click="targetChain = 'Omniflix';sendAttacker()">Attack Omniflix</button>
+                    <button v-if="defend" @click="targetChain = 'Uptick';sendDefender()">Defend Uptick</button>
+                    <button v-if="defend" @click="targetChain = 'Stargaze';sendDefender()">Defend Stargaze</button>
+                    <button v-if="defend" @click="targetChain = 'Omniflix';sendDefender()">Defend Omniflix</button>
                     
-
                     <div>
                       <img v-if="!isVideo(selectedNFT.imageUrl)" 
                           class="full-nftimage"
@@ -120,6 +119,7 @@ export default {
     },
     async sendAttacker() {
       console.log("attacking", this.targetChain)
+      this.attack = false
       const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
@@ -131,8 +131,19 @@ export default {
       })
       console.log(data)
     },
-    sendDefender() {
-
+    async sendDefender() {
+      console.log("defending", this.targetChain)
+      this.defend = false
+      const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
+          collection: this.selectedNFT.collection,
+          tokenId: this.selectedNFT.tokenId,
+          attackChain: this.targetChain
+        }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      })
+      console.log(data)
     },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
@@ -269,10 +280,8 @@ export default {
     border-radius: 5px;
 }
 .nftimage{
-    width: 0;
-    height: 0;
-    min-height: 100%;
-    min-width: 100%;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
 }
 .full-nftimage{
