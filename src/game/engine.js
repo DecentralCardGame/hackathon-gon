@@ -70,7 +70,7 @@ class chainWarsGame {
                 }
                 else {
                     let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
-                    console.error(error)
+                    //console.error(error)
                     return error
                 }
             }
@@ -85,7 +85,7 @@ class chainWarsGame {
                 }
                 else {
                     let error = "Trying to switch from attacker to defender, but the NFT is not an attacker."
-                    console.error(error)
+                    //console.error(error)
                     return error
                 }
             }
@@ -116,7 +116,7 @@ class chainWarsGame {
                 }
                 else {
                     let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
-                    console.error(error)
+                    //console.error(error)
                     return error
                 }
             }
@@ -131,7 +131,7 @@ class chainWarsGame {
                 }
                 else {
                     let error = "Trying to switch from attacker to defender, but the NFT is not an attacker."
-                    console.error(error)
+                    //console.error(error)
                     return error
                 }
             }

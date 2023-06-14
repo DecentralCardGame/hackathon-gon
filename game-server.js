@@ -142,56 +142,6 @@ app.get('/stargaze/:address', function (req, res) {
     graphreq.write(data)
     graphreq.end()
 })
-/*
-app.get('/iris/:address', function (req, res) {
-  const data = JSON.stringify({
-    "pageSize": "20",
-    "pageNumber": "1",
-    "owner": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
-    "filterType": "0",
-    "did": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
-    "authenticationAddress": "iaa1awpflkaj937pkn6ws5f048hhf7jwjg8feq85qh",
-    "chainType": "IRIS_IRISHUB",
-    "lang": "en",
-    "mobileVersion": "1.3.2"
-    })
-    
-  const options = {
-  hostname: 'web.upticknft.com',
-  path: '/uptickapi1/homepage/getMyTokenId.json',
-  port: 443,
-  method: 'POST',
-  headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': data.length,
-      'User-Agent': 'Node',
-    },
-  }
-
-  const irisreq = https.request(options, (irisres) => {
-  let data = '';
-
-  irisres.on('data', (d) => {
-      data += d;
-  });
-  irisres.on('end', () => {
-      if (JSON.parse(data) && JSON.parse(data).data && JSON.parse(data).data.tokens) {
-          let dataRefined = JSON.parse(data).data.tokens.tokens
-
-          dataRefined.forEach((nft) => {
-              nft.imageUrl = R.replace('ipfs://', 'https://ipfs.io/ipfs/', nft.imageUrl)
-          })
-
-          res.end(JSON.stringify(dataRefined))
-      }
-      else
-          res.end("data is crap: "+data)
-    })
-  })
-  irisreq.write(data)
-  irisreq.end()
-})
-*/
 app.get('/omniflix/:address', function (req, res) {
   https.get('https://data-api.omniflix.studio/nfts?owner='+req.params.address, (omnires) => {
   let data = []
