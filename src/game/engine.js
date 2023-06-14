@@ -32,7 +32,6 @@ class chainWarsGame {
             this.NFTs[collection.toString()+tokenId.toString()] = newNFT
             this.addPlayer(owner)
             this.players[owner].NFTs.push(newNFT)
-            //this.chains[chainName].defenders[collection.toString()+tokenId.toString()] = newNFT
             return newNFT
         }
         else return this.NFTs[collection.toString()+tokenId.toString()]
@@ -52,11 +51,8 @@ class chainWarsGame {
         if (!defender.alive) 
             return "Please allow the dead some rest."
 
-        console.log("sending defender", defender, "to", defendChain)
-
         // check if NFT is moved to another chain
         if (defender.deployed != defendChain) {
-            console.log("defender is deployed somewhere else")
             // remove the NFT from its deployed chain, check for attackers and defenders
             if (defender.deployed && this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
                 delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
@@ -67,7 +63,6 @@ class chainWarsGame {
 
             // after deleting from old chain, add as defender on new chain
             this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
-            console.log("chains after add", this.chains[defendChain])
             // also set deploy chain on nft itself
             defender.deployed = defendChain
             return "success"
@@ -100,8 +95,6 @@ class chainWarsGame {
         else if (attackChain == attacker.originChain)
             return "You cannot attack your home chain!"
         
-            console.log("sending attacker", attacker, "to", attackChain)
-
         // check if NFT is moved to another chain
         if (attacker.deployed != attackChain) {
             // remove the NFT from its deployed chain, check for attackers and defenders
