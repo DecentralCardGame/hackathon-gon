@@ -260,7 +260,6 @@ app.post('/sendAttacker', (req, res) => {
   let data = req.body
   res.statusMessage = game.sendAttacker(data.collection, data.tokenId, data.attackChain)
   res.status(200).end()
-  res.status(200).sendStatus(result)
 })
 
 const httpServer = http.createServer(app)
@@ -270,8 +269,7 @@ const httpsPort = 443
 
 httpServer.listen(httpPort, () => {
   console.log('HTTP Server running on port '+httpPort)
-});
-
+})
 httpsServer.listen(httpsPort, () => {
   console.log('HTTPS Server running on port '+httpsPort)
-});
+})
