@@ -253,13 +253,14 @@ app.get('/fight', function(req, res) {
 })
 app.post('/sendDefender', (req, res) => {
   let data = req.body
-  let result = game.sendDefender(data.collection, data.tokenId, data.defendChain)
-  res.status(200).send(result)
+  res.statusMessage = game.sendDefender(data.collection, data.tokenId, data.defendChain)
+  res.status(200).end()
 })
 app.post('/sendAttacker', (req, res) => {
   let data = req.body
-  let result = game.sendDefender(data.collection, data.tokenId, data.attackChain)
-  res.status(200).send(result)
+  res.statusMessage = game.sendAttacker(data.collection, data.tokenId, data.attackChain)
+  res.status(200).end()
+  res.status(200).sendStatus(result)
 })
 
 const httpServer = http.createServer(app)
