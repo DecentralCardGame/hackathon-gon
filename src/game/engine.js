@@ -85,12 +85,10 @@ class chainWarsGame {
                 return error
             }
         }
-        
-        
     }
     sendAttacker(collection, tokenId, attackChain) {
         let attacker = this.NFTs[collection.toString()+tokenId.toString()]
-        if (attacker.alive) 
+        if (!attacker.alive) 
             return "Please allow the dead some rest."
         else if (attackChain == attacker.originChain)
             return "You cannot attack your home chain!"
