@@ -256,13 +256,17 @@ app.post('/sendDefender', (req, res) => {
   let data = req.body
   res.statusMessage = game.sendDefender(data.collection, data.tokenId, data.defendChain)
   console.log(res.statusMessage)
-  res.status(200).end()
+  res.status(200).json({
+    status: res.statusMessage,
+  })
 })
 app.post('/sendAttacker', (req, res) => {
   let data = req.body
   res.statusMessage = game.sendAttacker(data.collection, data.tokenId, data.attackChain)
   console.log(res.statusMessage)
-  res.status(200).end()
+  res.status(200).json({
+    status: res.statusMessage,
+  })
 })
 
 const httpServer = http.createServer(app)
