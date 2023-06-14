@@ -52,10 +52,10 @@ class chainWarsGame {
             // check if NFT is moved to another chain
             if (defender.deployed != defendChain) {
                 // remove the NFT from its deployed chain, check for attackers and defenders
-                if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
+                if (defender.deployed && this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
                 }
-                else if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
+                else if (defender.deployed && this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
                 }
 
@@ -90,10 +90,10 @@ class chainWarsGame {
             // check if NFT is moved to another chain
             if (attacker.deployed != attackChain) {
                 // remove the NFT from its deployed chain, check for attackers and defenders
-                if (this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
+                if (attacker.deployed && this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
                 }
-                else if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
+                else if (attacker.deployed && this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]
                 }
                 
