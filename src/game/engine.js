@@ -56,6 +56,7 @@ class chainWarsGame {
 
         // check if NFT is moved to another chain
         if (defender.deployed != defendChain) {
+            console.log("defender is deployed somewhere else")
             // remove the NFT from its deployed chain, check for attackers and defenders
             if (defender.deployed && this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
                 delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
@@ -72,6 +73,7 @@ class chainWarsGame {
         }
         // if nft stays on the same chain, it is just a switch to defenders
         else {
+            console.log("defender is deployed at the right place already")
             if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()])
                 return "This NFT already defends this chain."
 

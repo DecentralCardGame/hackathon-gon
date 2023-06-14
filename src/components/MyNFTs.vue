@@ -137,7 +137,7 @@ export default {
       const {data} = await axios.post('https://nftarena.cc/sendDefender', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
-          attackChain: this.targetChain
+          defendChain: this.targetChain
         }, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
