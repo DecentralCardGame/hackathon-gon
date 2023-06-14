@@ -20,7 +20,7 @@ class chainWarsGame {
         if (!this.NFTs[collection.toString()+tokenId.toString()]) {
             let newNFT = {
                 originChain: chainName,
-                deployed: chainName,
+                deployed: null,
                 collection: collection,
                 tokenId: tokenId,
                 owner: owner,
@@ -54,29 +54,21 @@ class chainWarsGame {
                 // remove the NFT from its deployed chain, check for attackers and defenders
                 if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]
-                    // after deleting from old chain, add as defender on new chain
-                    this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
-                    // also set deploy chain on nft itself
-                    defender.deployed = defendChain
-                    return "success"
                 }
                 else if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
-                    // after deleting from old chain, add as defender on new chain
-                    this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
-                    // also set deploy chain on nft itself
-                    defender.deployed = defendChain
-                    return "success"
                 }
-                else {
-                    let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
-                    //console.error(error)
-                    return error
-                }
+
+                // after deleting from old chain, add as defender on new chain
+                this.chains[defendChain].defenders[collection.toString()+tokenId.toString()] = defender
+                // also set deploy chain on nft itself
+                defender.deployed = defendChain
+                return "success"
             }
             // if nft stays on the same chain, it is just a switch to defenders
             else {
-                if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()]) return -1
+                if (this.chains[defender.deployed].defenders[collection.toString()+tokenId.toString()])
+                    return "This NFT already defends this chain."
                 if (this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     // the NFT only changes from attacker to defender
                     delete this.chains[defender.deployed].attackers[collection.toString()+tokenId.toString()]
@@ -100,29 +92,21 @@ class chainWarsGame {
                 // remove the NFT from its deployed chain, check for attackers and defenders
                 if (this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]
-                    // after deleting from old chain, add as attacker on new chain
-                    this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
-                    // also set deploy chain on nft itself
-                    attacker.deployed = attackChain
-                    return "success"
                 }
                 else if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) {
                     delete this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]
-                    // after deleting from old chain, add as attacker on new chain
-                    this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
-                    // also set deploy chain on nft itself
-                    attacker.deployed = attackChain
-                    return "success"
                 }
-                else {
-                    let error = "Trying to remove a NFT from a chain, but it is neither attacker nor defender"
-                    //console.error(error)
-                    return error
-                }
+                
+                // after deleting from old chain, add as attacker on new chain
+                this.chains[attackChain].attackers[collection.toString()+tokenId.toString()] = attacker
+                // also set deploy chain on nft itself
+                attacker.deployed = attackChain
+                return "success"
             }
             // for same chain, it is just a switch to attackers
             else {
-                if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) return -1
+                if (this.chains[attacker.deployed].attackers[collection.toString()+tokenId.toString()]) 
+                    return "This NFT already attacks this chain."
                 if (this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]) {
                     // the NFT only changes from defender to attacker
                     delete this.chains[attacker.deployed].defenders[collection.toString()+tokenId.toString()]

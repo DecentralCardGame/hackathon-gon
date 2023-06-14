@@ -259,12 +259,13 @@ app.post('/sendDefender', (req, res) => {
 app.post('/sendAttacker', (req, res) => {
   let data = req.body
   res.statusMessage = game.sendAttacker(data.collection, data.tokenId, data.attackChain)
+  
   res.status(200).end()
 })
 
 const httpServer = http.createServer(app)
 const httpsServer = https.createServer(options, app)
-const httpPort = 8
+const httpPort = 80
 const httpsPort = 443
 
 httpServer.listen(httpPort, () => {
