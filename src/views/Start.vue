@@ -31,19 +31,11 @@ export default {
   components: {PageHeader, Leaderboard, MyNFTs},
   data: function() {
     return {
-        viewModel: {
-        name:'',
-        
-        result: '',
-      },
       config: {
       }
     }
   },
   methods: {
-    sayHello () {
-      this.viewModel.result = "Hello " + this.viewModel.name
-    },
     
   },
   mounted () {

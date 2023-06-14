@@ -21,6 +21,8 @@ class chainWarsGame {
             let newNFT = {
                 originChain: chainName,
                 deployed: chainName,
+                collection: collection,
+                tokenId: tokenId,
                 owner: owner,
                 name: NFTname,
                 imageUrl: imageUrl,

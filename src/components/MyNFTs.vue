@@ -5,15 +5,32 @@
         
         <div class="qux-container qux-element Leaderboard_detail">
             <div class="qux-container qux-element RoundedRectangle7">
-                <div class="no-nft-info">
-                    <label class="qux-label" 
-                        v-if="!selectedNFT">
-                        <span >Select one of your NFT
-                        </span>
-                    </label>
+                <div class="no-nft-info"
+                  v-if="!selectedNFT">
+                  <label class="qux-label" >
+                    <span >Select one of your NFT
+                    </span>
+                  </label>
                 </div>
                 <div class="nft-info" 
                     v-if="selectedNFT">
+
+                    <button @click="sendAttacker">Attack</button>
+                    <button @click="sendDefender">Defend</button>
+                    
+
+                    <div>
+                      <img v-if="!isVideo(selectedNFT.imageUrl)" 
+                          class="full-nftimage"
+                          :src="selectedNFT.imageUrl"
+                      />
+                      <video autoplay 
+                          class="full-nftimage"
+                          v-if="isVideo(selectedNFT.imageUrl)"
+                          :src="selectedNFT.imageUrl" type="video/mp4"
+                      />
+                    </div>
+
                     <label class="qux-label">
                         <span >Name: {{selectedNFT.name}}
                         </span>
@@ -23,17 +40,14 @@
                         </span>
                     <label class="qux-label">
                     </label>
-                        <span >Collection: {{selectedNFT.collectionAddr}}
+                        <span >Origin: {{selectedNFT.originChain}}
                         </span>
                     <label class="qux-label">
                     </label>
-                        <span >Origin: {{selectedNFT.collectionAddr}}
-                        </span>
-                    <label class="qux-label">
-                    </label>
-                        <span >Residence: {{selectedNFT.collectionAddr}}
+                        <span >Deployed at: {{selectedNFT.deployed}}
                         </span>
                     </label>
+                    
                 </div>
             </div>
         </div>
@@ -50,10 +64,12 @@
                         :id="index"
                         :src="nft.imageUrl"
                     />
-                    <video v-if="isVideo(nft.imageUrl)" class="nftimage"
-                        :id="index">
-                        <source :src="nft.imageUrl" type="video/mp4">
-                    </video>
+                    <video autoplay
+                        v-if="isVideo(nft.imageUrl)" 
+                        class="nftimage"
+                        :id="index"
+                        :src="nft.imageUrl" type="video/mp4"
+                    />
                 </li>
             </ul>
         </div>
@@ -74,7 +90,9 @@ export default {
         omniflixAddresses: [],
         irisAddresses: [],
         NFTs: [],
-        selectedNFT: undefined
+        selectedNFT: undefined,
+        attack: false,
+        defend: false
     }
   },
   props: {
@@ -91,12 +109,13 @@ export default {
   },
   methods: {
     isVideo(src) {
-      console.log("called isvideo with", src)
       return src.endsWith(".mp4")
     },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
-        console.log(this.selectedNFT)
+        this.attack = false
+        this.defend = false
+        console.log("selectedNFT: ", this.selectedNFT)
     },
     chainwarsData() {
       console.log("requesting chain data")
@@ -231,6 +250,11 @@ export default {
     height: 0;
     min-height: 100%;
     min-width: 100%;
+    object-fit: cover;
+}
+.full-nftimage{
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 body{margin:0px;font-family:'Helvetica Neue', 'Helvetica', sans-serif;}
