@@ -304,7 +304,7 @@ app.get('/fight', function(req, res) {
 })
 app.post('/sendDefender', (req, res) => {
   let data = req.body;
-  game.sendDefender(data.collection, data.tokenId, data.defendChain)
+  let result = game.sendDefender(data.collection, data.tokenId, data.defendChain)
   if (result == 0) {
     res.send('Success. Data Received: ' + JSON.stringify(data));
   }
@@ -314,7 +314,7 @@ app.post('/sendDefender', (req, res) => {
 })
 app.post('/sendAttacker', (req, res) => {
   let data = req.body;
-  game.sendDefender(data.collection, data.tokenId, data.attackChain)
+  let result = game.sendDefender(data.collection, data.tokenId, data.attackChain)
   if (result == 0) {
     res.send('Success. Data Received: ' + JSON.stringify(data));
   }

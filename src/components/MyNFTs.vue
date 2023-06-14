@@ -15,8 +15,15 @@
                 <div class="nft-info" 
                     v-if="selectedNFT">
 
-                    <button @click="sendAttacker">Attack</button>
-                    <button @click="sendDefender">Defend</button>
+                    <button v-if="!attack && !defend" @click="attack = true">Attack</button>
+                    <button v-if="!attack && !defend" @click="defend = true">Defend</button>
+                    
+                    <button v-if="attack" @click="targetChain = 'Uptick';sendAttacker()">Attack Uptick</button>
+                    <button v-if="attack" @click="targetChain = 'Stargaze';sendAttacker">Attack Stargaze</button>
+                    <button v-if="attack" @click="targetChain = 'Omniflix';sendAttacker">Attack Omniflix</button>
+                    <button v-if="defend" @click="targetChain = 'Uptick';sendDefender">Defend Uptick</button>
+                    <button v-if="defend" @click="targetChain = 'Stargaze';sendDefender">Defend Stargaze</button>
+                    <button v-if="defend" @click="targetChain = 'Omniflix';sendDefender">Defend Omniflix</button>
                     
 
                     <div>
@@ -92,11 +99,11 @@ export default {
         NFTs: [],
         selectedNFT: undefined,
         attack: false,
-        defend: false
+        defend: false,
+        targetChain: null
     }
   },
   props: {
-    
   },
   mounted () {
     // here we load all the addresses from the keplr wallet with given chain ids
@@ -110,6 +117,22 @@ export default {
   methods: {
     isVideo(src) {
       return src.endsWith(".mp4")
+    },
+    async sendAttacker() {
+      console.log("attacking", this.targetChain)
+      const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
+          collection: this.selectedNFT.collection,
+          tokenId: this.selectedNFT.tokenId,
+          attackChain: this.targetChain
+        }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      })
+      console.log(data)
+    },
+    sendDefender() {
+
     },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
