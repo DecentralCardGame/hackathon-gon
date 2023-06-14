@@ -32,7 +32,7 @@ class chainWarsGame {
             this.NFTs[collection.toString()+tokenId.toString()] = newNFT
             this.addPlayer(owner)
             this.players[owner].NFTs.push(newNFT)
-            this.chains[chainName].defenders[collection.toString()+tokenId.toString()] = newNFT
+            //this.chains[chainName].defenders[collection.toString()+tokenId.toString()] = newNFT
             return newNFT
         }
         else return this.NFTs[collection.toString()+tokenId.toString()]

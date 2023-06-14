@@ -240,6 +240,7 @@ app.get('/state', function(req, res) {
   res.send(game)
 })
 app.get('/chains', function(req, res) {
+  console.log("sending chains", game.chains)
   res.send(game.chains)
 })
 app.get('/nfts', function(req, res) {
