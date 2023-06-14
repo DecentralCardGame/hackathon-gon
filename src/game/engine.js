@@ -10,8 +10,8 @@ class chainWarsGame {
     addChain(chainName) {
         this.chains[chainName] = {
             name: chainName,
-            defenders: [],
-            attackers: [],
+            defenders: {},
+            attackers: {},
             capturedBy: [],
             log: []
         }
