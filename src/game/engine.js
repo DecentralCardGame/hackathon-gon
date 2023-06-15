@@ -5,6 +5,7 @@ class chainWarsGame {
         this.NFTs = {}
         this.chains = {}
         this.players = {}
+        this.fightCounter = 0
         this.lastFight = new Date()
     }
     addChain(chainName) {
@@ -174,6 +175,7 @@ class chainWarsGame {
                 }
 
                 chain.log.push(log)
+                this.fightCounter++
                 report += "A fight happened on "+chain.name+" chain! Check logs!"
             }
             else if (R.length(R.keys(chain.attackers)) > 0) {
@@ -184,7 +186,8 @@ class chainWarsGame {
                 chain.capturedBy = rulers
                 let log = "Without any resistance " + rulers + " has won and seized control over " + chain.name + " - their banner is lifted over " + chain.name + "'s chain."
                 chain.log.push(log)
-                report += "Without a "+chain.name+" was captured! Check logs!"
+                this.fightCounter++
+                report += "Without a fight "+chain.name+" was captured! Check logs!"
             }
         }, this.chains)
 

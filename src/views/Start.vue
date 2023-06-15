@@ -6,7 +6,7 @@
             <PageHeader
             />
             
-            <Leaderboard v-show="isLeaderboardVisible"
+            <Leaderboard v-if="isLeaderboardVisible"
             />
 
             <MyNFTs v-if="isMyNFTsVisible"

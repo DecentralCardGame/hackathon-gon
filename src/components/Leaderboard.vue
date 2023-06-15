@@ -43,11 +43,11 @@
                 </span>
             </label>
             <label class="qux-label qux-element Label33">
-                <span class="qux-common-label">Omniflix
+                <span class="qux-common-label">{{leaders[0].name}}
                 </span>
             </label>
             <label class="qux-label qux-element Label34">
-                <span class="qux-common-label">1
+                <span class="qux-common-label">{{leaders[0].captures}}
                 </span>
             </label>
             <label class="qux-label qux-element Label35">
@@ -55,22 +55,21 @@
                 </span>
             </label>
             <label class="qux-label qux-element Label37">
-                <span class="qux-common-label">1
+                <span class="qux-common-label">{{leaders[1].captures}}
                 </span>
             </label>
             <label class="qux-label qux-element Label38">
                 <span class="qux-common-label">3
                 </span></label>
             <label class="qux-label qux-element Label39">
-                <span class="qux-common-label">Stargaze
+                <span class="qux-common-label">{{leaders[2].name}}
                 </span></label>
             <label class="qux-label qux-element Label40">
-                <span class="qux-common-label">0
+                <span class="qux-common-label">{{leaders[2].captures}}
                 </span>
             </label>
-
             <label class="qux-label qux-element Label45">
-                <span class="qux-common-label">Uptick
+                <span class="qux-common-label">{{leaders[1].name}}
                 </span>
             </label>
 
@@ -177,65 +176,110 @@ import ChainTopBox from '@/components/ChainTopBox'
 import ChainBottomBox from '@/components/ChainBottomBox'
 
 export default {
-  name: 'Leaderboard',
-  components: {ChainInfoBox, ChainTopBox, ChainBottomBox},
+    name: 'Leaderboard',
+    components: {ChainInfoBox, ChainTopBox, ChainBottomBox},
 
-  data() {
+    data() {
     return {
         Stargaze: {},
         Omniflix: {},
         Uptick: {},
         stats: {
-            chains: 3,
+            chains: 0,
             aliveNFTs: 0,
             fallenNFTs: 0,
             fights: 0,
         },
-        leaders: []
+        leaders: [
+            {name:"dummy", captures: 0},
+            {name:"dummy", captures: 0},
+            {name:"dummy", captures: 0}
+        ]
     }
-  },
-  props: {
-    
-  },
-  mounted () {
-    const options = {
-        method: 'GET',
-        url: 'https://nftarena.cc/chains',
-        withCredentials: false,
-        rejectUnauthorized: false,
-        headers: {
-          'Content-Type': 'application/json'
+    },
+    props: {
+
+    },
+    mounted () {
+        this.getChains()
+        this.getNFTs()
+        this.getStats()
+    },
+    methods: {
+        getStats () {
+            const options = {
+                method: 'GET',
+                url: 'https://nftarena.cc/stats',
+                withCredentials: false,
+                rejectUnauthorized: false,
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }
+            axios.request(options).then((response) => {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.error(error)
+            })
+        },
+        getChains () {
+            const options = {
+                method: 'GET',
+                url: 'https://nftarena.cc/chains',
+                withCredentials: false,
+                rejectUnauthorized: false,
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }
+            axios.request(options).then((response) => {
+                let chains = R.values(response.data)
+                this.stats.chains = R.length(chains)
+                // first fill captures with 0
+                chains.forEach(chain => {
+                    chain.captures = 0
+                })
+                // then count all captures
+                chains.forEach(chain => {
+                    if (chain.capturedBy.length > 0) {
+                        chain.capturedBy.forEach(capturer => {
+                            response.data[capturer].captures++
+                        })
+                    }
+                })
+                // then move to vue data object
+                chains.forEach(chain => {
+                    this[chain.name] = chain
+                })
+                // and sort the leaders
+                this.leaders = R.reverse(R.sortBy(R.prop("captures"))(chains))
+            })
+            .catch(function (error) {
+                console.error(error)
+            })
+        },
+        getNFTs () {
+            const options = {
+                method: 'GET',
+                url: 'https://nftarena.cc/nfts',
+                withCredentials: false,
+                rejectUnauthorized: false,
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }
+            axios.request(options).then((response) => {
+                let nfts = R.values(response.data)
+                console.log(nfts)
+                this.stats.aliveNFTs = R.count(x => x.alive, nfts)
+                this.stats.fallenNFTs = nfts.length - this.stats.aliveNFTs
+            })
+            .catch(function (error) {
+                console.error(error)
+            })
         }
     }
-    
-    axios.request(options).then((response) => {
-        this.Stargaze = response.data.Stargaze
-        this.Omniflix = response.data.Omniflix
-        this.Uptick = response.data.Uptick
-
-        let chains = [this.Stargaze, this.Omniflix, this.Uptick]
-        let names = R.pluck("name", chains)
-
-        chains.forEach(chain => {
-            if (chain.capturedBy.length > 0) {
-                chain.capturedBy.forEach(capturer => {
-                    response.data[capturer].captures++;
-                })
-                console.log("chain.capturedBy")
-            }
-        })
-
-        console.log("names", names)
-        //R.count
-
-        console.log("response", response.data)
-    })
-    .catch(function (error) {
-        console.error(error)
-    })
-    },
-  methods: {
-  }
 }
 </script>
 

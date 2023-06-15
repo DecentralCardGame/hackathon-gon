@@ -236,11 +236,13 @@ app.get('/uptick/:address', function (req, res) {
   })
 })
 
-app.get('/state', function(req, res) {
-  res.send(game)
+app.get('/stats', function(req, res) {
+  res.send({
+    fights: game.fightCounter,
+    players: R.keys(game.players).length
+  })
 })
 app.get('/chains', function(req, res) {
-  console.log("sending chains", game.chains)
   res.send(game.chains)
 })
 app.get('/nfts', function(req, res) {
