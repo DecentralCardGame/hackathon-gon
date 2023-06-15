@@ -6,10 +6,10 @@
             <PageHeader
             />
             
-            <Leaderboard v-if="false"
+            <Leaderboard v-show="isLeaderboardVisible"
             />
 
-            <MyNFTs v-if="true"
+            <MyNFTs v-if="isMyNFTsVisible"
             />
 
 
@@ -31,10 +31,28 @@ export default {
   components: {PageHeader, Leaderboard, MyNFTs},
   data: function() {
     return {
+      isLeaderboardVisible: true,
+      isMyNFTsVisible: false,
       config: {
       }
     }
   },
+  watch:{
+    $route (to, from){
+      if (to.name == "Leaderboard") {
+        console.log("leaderboard")
+        this.isLeaderboardVisible = true
+        this.isMyNFTsVisible = false
+      }
+      else if (to.name == "MyNFTs") {
+        console.log("mynfts")
+        this.isLeaderboardVisible = false
+        this.isMyNFTsVisible = true
+      }
+        
+      console.log("route to", to, "from", from)
+    }
+  },   
   methods: {
     
   },
@@ -58,7 +76,10 @@ export default {
 .qux-container{border-style:solid;border-width:0;}
 
 /*! CSS Used from: Embedded */
-.qux-label{display:inline-block;}
+.qux-label{
+  display: inline-block;
+  overflow: inherit;
+}
 /*! CSS Used from: Embedded */
 .qux-template-Circle{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#a8d324;}
 .qux-template-Circle1{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#ffffff;}
@@ -69,19 +90,14 @@ export default {
 .Start .Label:hover{transition:all 0.2s;text-decoration:underline;}
 .Start .Box1{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#1d2126;grid-column-start:1;grid-column-end:2;grid-row-start:4;grid-row-end:5;z-index:1;display:grid;grid-template-columns:4.7% 30px 3.1% 90px 3.1% 20px 67px 3px minmax(0,1fr);grid-template-rows:15px 3px 25px 2px 1fr;}
 .Start .Image1{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:3;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aIAxzmDyUZIZ1mXUKDzFcQuCFrCh5j1vcyCa1nLivzwhmMUh7uyjne.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
-.Start .Label1_170{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:16px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:4;grid-column-end:5;grid-row-start:3;grid-row-end:5;z-index:4;}
-.Start .Label1_170:hover{transition:all 0.2s;text-decoration:underline;}
 .Start .Label1{border:0px solid transparent;grid-column-start:7;grid-column-end:8;grid-row-start:3;grid-row-end:4;z-index:203;}
 .Start .Label1:hover{transition:all 0.2s;}
-.Start .Label2_150{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:16px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:6;grid-column-end:9;grid-row-start:3;grid-row-end:5;z-index:204;}
-.Start .Label2_150:hover{transition:all 0.2s;text-decoration:underline;}
 .Start .Image{grid-column-start:1;grid-column-end:2;grid-row-start:2;grid-row-end:4;z-index:2;display:flex;flex-direction:column;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aJzr8Is60G9K3zKDjShkCSuzEPMsW6ODFlYtvUjgkXfGno6QVGL8j6.jpg);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .Start .Group_Start{border:0px solid transparent;width:864px;margin-left:auto;margin-right:auto;min-height:226px;margin-top:129px;display:grid;grid-template-columns:166px 531px 167px;grid-template-rows:53px 64px 109px;}
 .Start .Image3{grid-column-start:1;grid-column-end:4;grid-row-start:2;grid-row-end:4;z-index:8;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10ay1whPu7k6z4R6hprbkITaOcr7tbWqMzjjSLseWzGVX3GkJ3zLq1QK.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .Start .Image4{grid-column-start:2;grid-column-end:3;grid-row-start:1;grid-row-end:3;z-index:9;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10abtKO1UcOJWb50ktiuGHuxe3QI75vHQfmVqiazGBTfKIhzWQhUMJ4a.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .Start .BG{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#263236;grid-column-start:1;grid-column-end:2;grid-row-start:5;grid-row-end:6;z-index:10;display:grid;grid-template-columns:minmax(0,1fr) 280px 1% 280px 1% 280px 1% 280px minmax(0,1fr);grid-template-rows:25px 1px 119px 1px 24px minmax(265px, auto) 25px minmax(1px, auto) minmax(264px, auto) 1px 1fr;}
 .Start .Leaderboard_detail{border:0px solid transparent;grid-column-start:2;grid-column-end:3;grid-row-start:6;grid-row-end:10;z-index:11;display:flex;flex-direction:column;}
-.Start .RoundedRectangle4{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid transparent;border-radius:10px;background-color:#1d2126;width:280px;margin-left:auto;margin-right:auto;min-height:555px;margin-top:0px;display:grid;grid-template-columns:minmax(0,1fr) 16px 23px 40px 6px 6px 4px 10px 13px 21px 3.9% 29px 40px minmax(0,1fr);grid-template-rows:30px minmax(11px, auto) 17px 1px 11px 10px 1px 11px 10px 1px 11px 315px minmax(11px, auto) 18px minmax(11px, auto) 11px minmax(11px, auto) 1fr;}
 .Start .Label29{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:2;grid-column-end:4;grid-row-start:2;grid-row-end:3;z-index:13;}
 .Start .Label30{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:5;grid-column-end:9;grid-row-start:2;grid-row-end:3;z-index:14;}
 .Start .Group_1{border:0px solid transparent;grid-column-start:5;grid-column-end:7;grid-row-start:4;grid-row-end:6;z-index:15;display:flex;flex-direction:column;}
@@ -105,11 +121,6 @@ export default {
 .Start .Label38{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:2;grid-column-end:4;grid-row-start:11;grid-row-end:12;z-index:33;}
 .Start .Label39{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:8;grid-column-end:11;grid-row-start:11;grid-row-end:12;z-index:34;}
 .Start .Label40{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:13;grid-column-end:14;grid-row-start:11;grid-row-end:12;z-index:35;}
-.Start .Label47{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:2;grid-column-end:10;grid-row-start:13;grid-row-end:14;z-index:36;}
-.Start .Label48{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:3;grid-column-end:6;grid-row-start:15;grid-row-end:16;z-index:37;}
-.Start .Label49{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:3;grid-column-end:6;grid-row-start:17;grid-row-end:18;z-index:38;}
-.Start .Label50{color:#ffffff;text-align:right;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:12;grid-column-end:14;grid-row-start:15;grid-row-end:16;z-index:39;}
-.Start .Label51{color:#ffffff;text-align:right;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:12;grid-column-end:14;grid-row-start:17;grid-row-end:18;z-index:40;}
 .Start .Label45{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:8;grid-column-end:11;grid-row-start:8;grid-row-end:9;z-index:41;}
 .Start .Card_3_bottom{border:0px solid transparent;grid-column-start:8;grid-column-end:9;grid-row-start:8;grid-row-end:10;z-index:42;display:flex;flex-direction:column;}
 .Start .Label101{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:4;grid-column-end:5;grid-row-start:3;grid-row-end:4;z-index:44;}
@@ -280,6 +291,5 @@ div{margin:0px;}
 @font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7WxKOzY.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}
 @font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7GxKOzY.woff2) format('woff2');unicode-range:U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}
 @font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
-
 
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="qux-container qux-element BG">
         <div class="qux-container qux-element Leaderboard_detail">
-            <div class="qux-container qux-element RoundedRectangle4">
+            <div class="qux-container qux-element Leaderboardbox">
                 <label class="qux-label qux-element Label29">
                     <span class="qux-common-label">Position
                     </span>
@@ -68,30 +68,49 @@
                 <span class="qux-common-label">0
                 </span>
             </label>
-            <label class="qux-label qux-element Label47">
-                <span class="qux-common-label">Chain War Stats
-                </span>
-            </label>
-            <label class="qux-label qux-element Label48">
-                <span class="qux-common-label">Total Chains
-                </span>
-            </label>
-            <label class="qux-label qux-element Label49">
-                <span class="qux-common-label">Total Captures
-                </span>
-            </label>
-            <label class="qux-label qux-element Label50">
-                <span class="qux-common-label">3
-                </span>
-            </label>
-            <label class="qux-label qux-element Label51">
-                <span class="qux-common-label">2
-                </span>
-            </label>
+
             <label class="qux-label qux-element Label45">
                 <span class="qux-common-label">Uptick
                 </span>
             </label>
+
+            <label class="qux-label qux-element Stats Stats-title">
+                <span class="qux-common-label">Chain War Stats
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-description Stats1">
+                <span class="qux-common-label">Total Chains
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-data Stats1">
+                <span class="qux-common-label">{{stats.chains}}
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-description Stats2">
+                <span class="qux-common-label">Total Fights
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-data Stats2">
+                <span class="qux-common-label">{{stats.fights}}
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-description Stats3">
+                <span class="qux-common-label">Alive NFTs
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-data Stats3">
+                <span class="qux-common-label">{{stats.aliveNFTs}}
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-description Stats4">
+                <span class="qux-common-label">Fallen NFTs
+                </span>
+            </label>
+            <label class="qux-label qux-element Stats Stats-data Stats4">
+                <span class="qux-common-label">{{stats.fallenNFTs}}
+                </span>
+            </label>
+
         </div>
     </div>
     <div class="qux-container qux-element Card_3_bottom">
@@ -150,6 +169,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import * as R from "ramda"
+
 import ChainInfoBox from '@/components/ChainInfoBox'
 import ChainTopBox from '@/components/ChainTopBox'
 import ChainBottomBox from '@/components/ChainBottomBox'
@@ -160,14 +182,117 @@ export default {
 
   data() {
     return {
+        Stargaze: {},
+        Omniflix: {},
+        Uptick: {},
+        stats: {
+            chains: 3,
+            aliveNFTs: 0,
+            fallenNFTs: 0,
+            fights: 0,
+        },
+        leaders: []
     }
   },
   props: {
     
   },
   mounted () {
-  },
+    const options = {
+        method: 'GET',
+        url: 'https://nftarena.cc/chains',
+        withCredentials: false,
+        rejectUnauthorized: false,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    }
+    
+    axios.request(options).then((response) => {
+        this.Stargaze = response.data.Stargaze
+        this.Omniflix = response.data.Omniflix
+        this.Uptick = response.data.Uptick
+
+        let chains = [this.Stargaze, this.Omniflix, this.Uptick]
+        let names = R.pluck("name", chains)
+
+        chains.forEach(chain => {
+            if (chain.capturedBy.length > 0) {
+                chain.capturedBy.forEach(capturer => {
+                    response.data[capturer].captures++;
+                })
+                console.log("chain.capturedBy")
+            }
+        })
+
+        console.log("names", names)
+        //R.count
+
+        console.log("response", response.data)
+    })
+    .catch(function (error) {
+        console.error(error)
+    })
+    },
   methods: {
   }
 }
 </script>
+
+<style lang="scss">
+
+.Leaderboardbox{
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    border:0px solid transparent;
+    border-radius:10px;
+    background-color:#1d2126;
+    width:280px;
+    margin-left:auto;
+    margin-right:auto;
+    min-height:555px;
+    margin-top:0px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 16px 23px 40px 6px 6px 4px 10px 13px 21px 3.9% 29px 40px minmax(0,1fr);
+    grid-template-rows:30px minmax(11px, auto) 17px 1px 11px 10px 1px 11px 10px 1px 11px 200px 15px 15px 7px 12px 18px 18px 18px 1fr;
+}
+.Stats {
+    color:#ffffff;
+    text-align:left;
+    font-family:Roboto, " sans-serif";
+    font-size:10px;
+    letter-spacing:0px;
+    line-height:1;
+    border:0px solid transparent;
+}
+.Stats-description {
+    grid-column-start:3;
+    grid-column-end:6;
+}
+.Stats-data {
+    grid-column-start:12;
+    grid-column-end:14;
+}
+.Stats-title{
+    grid-column-start:2;
+    grid-column-end:10;
+    grid-row-start:13;
+    grid-row-end:14;
+}
+.Stats1{
+    grid-row-start:15;
+    grid-row-end:16;
+}
+.Stats2{
+    grid-row-start:17;
+    grid-row-end:18;
+}
+.Stats3{
+    grid-row-start:18;
+    grid-row-end:19;
+}
+.Stats4{
+    grid-row-start:19;
+    grid-row-end:20;
+}
+
+</style>

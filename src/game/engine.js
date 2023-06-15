@@ -130,7 +130,7 @@ class chainWarsGame {
         // 10000 equals to 10s of min. waiting between fights
         if ( new Date() - this.lastFight < 10000 ) return " Last fight is not long ago, please give the fighters some rest."
         let report = ""
-        R.forEachObjIndexed((chain, id) => {
+        R.forEachObjIndexed((chain) => {
             if (R.length(R.keys(chain.attackers)) > 0 && R.length(R.keys(chain.defenders)) > 0) {
                 // If there are attackers and defenders on a chain, zip together fight pairs
                 let fights = R.zip(R.keys(chain.defenders), R.keys(chain.attackers))
@@ -175,6 +175,16 @@ class chainWarsGame {
 
                 chain.log.push(log)
                 report += "A fight happened on "+chain.name+" chain! Check logs!"
+            }
+            else if (R.length(R.keys(chain.attackers)) > 0) {
+                let attackingChains = R.countBy(nft => nft.originChain, R.values(chain.attackers))
+                let max = R.reduce(R.max, 0, R.values(attackingChains))
+                let rulers = R.keys(R.filter(x => x >= max, attackingChains))
+
+                chain.capturedBy = rulers
+                let log = "Without any resistance " + rulers + " has won and seized control over " + chain.name + " - their banner is lifted over " + chain.name + "'s chain."
+                chain.log.push(log)
+                report += "Without a "+chain.name+" was captured! Check logs!"
             }
         }, this.chains)
 
