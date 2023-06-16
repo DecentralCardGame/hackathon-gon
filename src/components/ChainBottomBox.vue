@@ -1,69 +1,39 @@
 <template>
 <div class="qux-container qux-element RoundedRectangle">
-    <label class="qux-label qux-element Label57">
-        <span class="qux-common-label">Omniflix
-        </span>
-    </label>
-    <div class="qux-container qux-element Group_11">
-        <div class="qux-container qux-element Circle20_131">
-            <div class="qux-container qux-element Circle20">
-                <div class="qux-image qux-element Image16">
-                </div>
-            </div>
-        </div>
+
+    <div>
+        <label class="qux-label qux-element Label57">
+            <span v-if="!defend && !nft.empty" class="qux-common-label">
+                The Defenders of {{title}} are united behind their leader:
+            </span>
+            <span v-if="defend && !nft.empty" class="qux-common-label">
+                The Attackers have captured {{title}} with their leader:
+            </span>
+            <span v-if="nft.empty" class="qux-common-label">
+                No NFT Fighters are deployed at {{title}}.
+            </span>
+        </label>
     </div>
-    <label class="qux-label qux-element Label57_121">
-        <span class="qux-common-label">DEFENDING NATIVE CHAIN FROM
-        </span>
-    </label>
-    <label class="qux-label qux-element Label58_135">
-        <span class="qux-common-label">Uptick
-        </span>
-    </label>
-    <div class="qux-container qux-element Group_15">
-        <div class="qux-container qux-element Circle20_160">
-            <div class="qux-container qux-element Circle20_159">
-                <div class="qux-image qux-element Image16_161">
-                </div>
-            </div>
-        </div>
+
+    <div v-if="!nft.empty" class="imageNft">
+        <img v-if="!isVideo(nft.imageUrl)" 
+            class="imageNft"
+            :src="nft.imageUrl"
+        />
+        <video autoplay 
+            class="imageNft"
+            v-if="isVideo(nft.imageUrl)"
+            :src="nft.imageUrl" type="video/mp4"
+        />
     </div>
-    <label class="qux-label qux-element Label58">
-        <span class="qux-common-label">XXX
-        </span>
-    </label>
-    <label class="qux-label qux-element Label59">
-        <span class="qux-common-label">ATTACKERS
-        </span>
-    </label>
-    <label class="qux-label qux-element Label60">
-        <span class="qux-common-label">DEFENDERS
-        </span>
-    </label>
-    <label class="qux-label qux-element Label61">
-        <span class="qux-common-label">XXX
-        </span>
-    </label>
-    <label class="qux-label qux-element Label63">
-        <span class="qux-common-label">Stargaze
-        </span>
-    </label>
-    <label class="qux-label qux-element Label63_127">
-        <span class="qux-common-label">XXX
-        </span>
-    </label>
-    <label class="qux-label qux-element Label66">
-        <span class="qux-common-label">ATTACKERS
-        </span>
-    </label>
-    <div class="qux-container qux-element Group_16">
-        <div class="qux-container qux-element Circle20_134">
-            <div class="qux-container qux-element Circle20_133">
-                <div class="qux-image qux-element Image16_132">
-                </div>
-            </div>
-        </div>
+    <div v-if="!nft.empty">
+        <label class="qux-label qux-element Label57">
+            <span class="qux-common-label">
+                {{nft.name}}
+            </span>
+        </label>
     </div>
+
 </div>
 </template>
 
@@ -76,15 +46,61 @@ export default {
         default () {
             return "noname"
         }
+    },
+    nft: {
+        type: Object,
+        default () {
+            return { empty: true }
+        }
+    },
+    defend: {
+        type: Boolean,
+        default () {
+            return true 
+        }
     }
   },
   mounted () {
+    console.log("frontnft", this.nft)
   },
   methods: {
+    isVideo(src) {
+      return src.endsWith(".mp4")
+    },
   }
 }
 </script>
 
 <style scoped lang="scss">
-.Start .RoundedRectangle{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid transparent;border-radius:10px;background-color:#39444a;width:280px;margin-left:auto;margin-right:auto;height:265px;margin-top:0px;display:grid;grid-template-columns:minmax(0,1fr) 12px 4px 44px 54px 26px 18px 28px 33px minmax(0,1fr);grid-template-rows:29px minmax(1px, auto) 11px 18px 12px 17px minmax(1px, auto) 1px 10px 1px 11px minmax(1px, auto) 11px 1fr;}
+.RoundedRectangle{
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    border:0px solid transparent;
+    border-radius:10px;
+    background-color:#39444a;
+    width:280px;
+    margin-left:auto;
+    margin-right:auto;
+    height:265px;
+    margin-top:0px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.Label57{
+    color:#ffffff;
+    text-align:center;
+    font-family:Roboto, " sans-serif";
+    font-size:10px;
+    letter-spacing:0px;
+    line-height:1;
+    border:0px solid transparent;
+    z-index:148;
+}
+.imageNft{
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 </style>

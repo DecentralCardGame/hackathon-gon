@@ -13,155 +13,122 @@
                 <div class="qux-container qux-element Group_1">
                     <div class="qux-container qux-element Circle6">
                         <div class="qux-container qux-element Circle7">
-                            <div class="qux-image qux-element Image9">
+                            <div class="qux-image qux-element Image9" :style="getChainLogo(1)">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <label class="qux-label qux-element Label31">
-                <span class="qux-common-label">Captures
-                </span>
-            </label>
-            <div class="qux-container qux-element Group">
-                <div class="qux-container qux-element Circle8">
-                    <div class="qux-container qux-element Circle9">
-                        <div class="qux-image qux-element Image10">
+                <label class="qux-label qux-element Label31">
+                    <span class="qux-common-label">Captures
+                    </span>
+                </label>
+                <div class="qux-container qux-element Group">
+                    <div class="qux-container qux-element Circle8">
+                        <div class="qux-container qux-element Circle9">
+                            <div class="qux-image qux-element Image10">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="qux-container qux-element Group_2">
-                <div class="qux-container qux-element Circle10">
-                    <div class="qux-container qux-element Circle11">
-                        <div class="qux-image qux-element Image11">
+                <div class="qux-container qux-element Group_2">
+                    <div class="qux-container qux-element Circle10">
+                        <div class="qux-container qux-element Circle11">
+                            <div class="qux-image qux-element Image11">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <label class="qux-label qux-element Label32">
-                <span class="qux-common-label">1
-                </span>
-            </label>
-            <label class="qux-label qux-element Label33">
-                <span class="qux-common-label">{{leaders[0].name}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Label34">
-                <span class="qux-common-label">{{leaders[0].captures}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Label35">
-                <span class="qux-common-label">2
-                </span>
-            </label>
-            <label class="qux-label qux-element Label37">
-                <span class="qux-common-label">{{leaders[1].captures}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Label38">
-                <span class="qux-common-label">3
-                </span></label>
-            <label class="qux-label qux-element Label39">
-                <span class="qux-common-label">{{leaders[2].name}}
-                </span></label>
-            <label class="qux-label qux-element Label40">
-                <span class="qux-common-label">{{leaders[2].captures}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Label45">
-                <span class="qux-common-label">{{leaders[1].name}}
-                </span>
-            </label>
+                <label class="qux-label qux-element Label32">
+                    <span class="qux-common-label">1
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label33">
+                    <span class="qux-common-label">{{leaders[0].name}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label34">
+                    <span class="qux-common-label">{{leaders[0].captures}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label35">
+                    <span class="qux-common-label">2
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label37">
+                    <span class="qux-common-label">{{leaders[1].captures}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label38">
+                    <span class="qux-common-label">3
+                    </span></label>
+                <label class="qux-label qux-element Label39">
+                    <span class="qux-common-label">{{leaders[2].name}}
+                    </span></label>
+                <label class="qux-label qux-element Label40">
+                    <span class="qux-common-label">{{leaders[2].captures}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Label45">
+                    <span class="qux-common-label">{{leaders[1].name}}
+                    </span>
+                </label>
 
-            <label class="qux-label qux-element Stats Stats-title">
-                <span class="qux-common-label">Chain War Stats
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-description Stats1">
-                <span class="qux-common-label">Total Chains
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-data Stats1">
-                <span class="qux-common-label">{{stats.chains}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-description Stats2">
-                <span class="qux-common-label">Total Fights
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-data Stats2">
-                <span class="qux-common-label">{{stats.fights}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-description Stats3">
-                <span class="qux-common-label">Alive NFTs
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-data Stats3">
-                <span class="qux-common-label">{{stats.aliveNFTs}}
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-description Stats4">
-                <span class="qux-common-label">Fallen NFTs
-                </span>
-            </label>
-            <label class="qux-label qux-element Stats Stats-data Stats4">
-                <span class="qux-common-label">{{stats.fallenNFTs}}
-                </span>
-            </label>
+                <label class="qux-label qux-element Stats Stats-title">
+                    <span class="qux-common-label">Chain War Stats
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-description Stats1">
+                    <span class="qux-common-label">Total Chains
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-data Stats1">
+                    <span class="qux-common-label">{{stats.chains}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-description Stats2">
+                    <span class="qux-common-label">Total Fights
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-data Stats2">
+                    <span class="qux-common-label">{{stats.fights}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-description Stats3">
+                    <span class="qux-common-label">Alive NFTs
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-data Stats3">
+                    <span class="qux-common-label">{{stats.aliveNFTs}}
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-description Stats4">
+                    <span class="qux-common-label">Fallen NFTs
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-data Stats4">
+                    <span class="qux-common-label">{{stats.fallenNFTs}}
+                    </span>
+                </label>
 
+            </div>
         </div>
-    </div>
-    <div class="qux-container qux-element Card_3_bottom">
-        <ChainBottomBox
-            title="Stargaze"
+    
+        <ChainPanel
+            :pos=1
+            :chain="leaders[0]"
+            :key="leaders[0]"
         />
-    </div>
-    <div class="qux-container qux-element Card_3_top">
-        <ChainInfoBox
-            title="Stargaze"
+        <ChainPanel
+            :pos=2
+            :chain="leaders[1]"
+            :key="leaders[1]"
         />
-    </div>
-    <div class="qux-container qux-element Card_3">
-        <ChainTopBox
-            title="Stargaze"
-            id="3"
+        <ChainPanel
+            :pos=3
+            :chain="leaders[2]"
+            :key="leaders[2]"
         />
-    </div>
-    <div class="qux-container qux-element Card_2_bottom">
-        <ChainBottomBox
-            title="Uptick"
-        />
-    </div>
-    <div class="qux-container qux-element Card_2_top">
-        <ChainInfoBox
-            title="Uptick"
-        />
-    </div>
-    <div class="qux-container qux-element Card_2">
-        <ChainTopBox
-            title="Uptick"
-            id="2"
-        />
-    </div>
-    <div class="qux-container qux-element Card_1_bottom">
-        <ChainBottomBox
-            title="Omniflix"
-        />
-    </div>
-    <div class="qux-container qux-element Card_1_Top">
-        <ChainInfoBox
-            title="Omniflix"
-            :defenders="1"
-            :captured-chains="none"
-        />
-    </div>
-    <div class="qux-container qux-element Card_1">
-        <ChainTopBox
-            title="Omniflix"
-            id="1"
-        />
-    </div>
+
         <div class="qux-image qux-element Leaderboardtitleimage">
         </div>
     </div>
@@ -170,14 +137,11 @@
 <script>
 import axios from 'axios'
 import * as R from "ramda"
-
-import ChainInfoBox from '@/components/ChainInfoBox'
-import ChainTopBox from '@/components/ChainTopBox'
-import ChainBottomBox from '@/components/ChainBottomBox'
+import ChainPanel from '@/components/ChainPanel'
 
 export default {
     name: 'Leaderboard',
-    components: {ChainInfoBox, ChainTopBox, ChainBottomBox},
+    components: {ChainPanel},
 
     data() {
     return {
@@ -186,14 +150,15 @@ export default {
         Uptick: {},
         stats: {
             chains: 0,
+            players: 0,
             aliveNFTs: 0,
             fallenNFTs: 0,
             fights: 0,
         },
         leaders: [
-            {name:"dummy", captures: 0},
-            {name:"dummy", captures: 0},
-            {name:"dummy", captures: 0}
+            {name:"dummy", captures: 0, capturedBy: [], log: []},
+            {name:"dummy", captures: 0, capturedBy: [], log: []},
+            {name:"dummy", captures: 0, capturedBy: [], log: []}
         ]
     }
     },
@@ -206,6 +171,20 @@ export default {
         this.getStats()
     },
     methods: {
+        getChainLogo () {
+            if (this.title == "Omniflix")
+                return {
+                    backgroundImage: `url(${require('@/assets/img/Cards_1.png')})`
+                }
+            if (this.title == "Uptick")
+                return {
+                    backgroundImage: `url(${require('@/assets/img/Cards_2.png')})`
+                }
+            if (this.title == "Stargaze")
+                return {
+                    backgroundImage: `url(${require('@/assets/img/Cards_3.png')})`
+            }
+        },
         getStats () {
             const options = {
                 method: 'GET',
@@ -217,7 +196,8 @@ export default {
                 }
             }
             axios.request(options).then((response) => {
-                console.log(response.data)
+                this.stats.players = response.data.players
+                this.stats.fights = response.data.fights
             })
             .catch(function (error) {
                 console.error(error)
@@ -271,7 +251,6 @@ export default {
             }
             axios.request(options).then((response) => {
                 let nfts = R.values(response.data)
-                console.log(nfts)
                 this.stats.aliveNFTs = R.count(x => x.alive, nfts)
                 this.stats.fallenNFTs = nfts.length - this.stats.aliveNFTs
             })
@@ -284,6 +263,9 @@ export default {
 </script>
 
 <style lang="scss">
+.Start .Image9{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aYdfc3zR9P21mee6ZPFy9zexI1VeT2ZBmsFN8aLg1Bg738hOJqF2e2.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Start .Image10{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aCXrBUuuR6Jzg7IFcNLzNXyTDANM6WKTlWayOxIPndvDAFRGyj0bqK.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Start .Image11{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aQtGBelHc6VxmiQmdOz4xdeCXskO837xJHCPFaGpbEByyRXMyEiGrK.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
 .Leaderboardbox{
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
