@@ -61,6 +61,21 @@ export default {
 .ImageDead{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .ImageNews{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/news.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
+.qux-repeater{overflow:auto;}
+.qux-repeater-child{  
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: auto;
+    aspect-ratio: 1;
+
+    object-fit: cover;
+    width: 100%;
+    height: 50%;
+    
+    border-radius: 5px;
+}
+
 /*! CSS Used from: https://nftarena.cc/css/app.f1c45761.css */
 #app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-align:center;color:#2c3e50;}
 /*! CSS Used from: Embedded */

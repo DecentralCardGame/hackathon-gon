@@ -48,7 +48,7 @@
                         {{selectedNFT.originChain}}
                       </span>
                   </label>
-                  <label v-if="selectedNFT.deployed" class="qux-label">
+                  <label v-if="selectedNFT.deployed && selectedNFT.alive" class="qux-label">
                     <span class="oneliner">
                       <b>Deployed at</b>
                     </span>
@@ -264,8 +264,6 @@ button {
   display: block;
 }
 
-.qux-repeater{overflow:auto;}
-
 .qux-textbox{border:1px solid #333;-webkit-transition:all .2s;transition:all .2s;padding:0;}
 .qux-textbox:focus{outline:none;}
 
@@ -309,20 +307,8 @@ button {
 }
 .MyNFTs .Label11_5{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:2;grid-column-end:4;grid-row-start:2;grid-row-end:3;z-index:17;}
 
-.MyNFTs .Grid{color:#333333;border:0px solid #333333;grid-column-start:4;grid-column-end:12;grid-row-start:2;grid-row-end:7;z-index:62;display:flex;flex-wrap:wrap;}
-.MyNFTs .Grid .qux-repeater-child{  
-    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 200px);
-    grid-template-rows: auto;
-    aspect-ratio: 1;
+.Grid{color:#333333;border:0px solid #333333;grid-column-start:4;grid-column-end:12;grid-row-start:2;grid-row-end:7;z-index:62;display:flex;flex-wrap:wrap;}
 
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    
-    border-radius: 5px;
-}
 .nftimage{
     width: 200px;
     height: 200px;

@@ -42,25 +42,45 @@
                     </div>
 
                     <label class="qux-label">
-                        <span >Name: {{selectedNFT.name}}
+                      <span class="oneliner">
+                        <b>Name</b>
+                      </span>
+                      <span class="oneliner"> 
+                        {{selectedNFT.name}}
+                      </span>
+                    </label>
+                    <label class="qux-label">
+                      <span class="oneliner">
+                        <b>Description</b>
+                      </span>
+                      <span class="oneliner">
+                        {{selectedNFT.description}}
+                      </span>
+                    </label>
+                    <label class="qux-label">
+                      <span class="oneliner">
+                        <b>Origin</b>
+                      </span>
+                      <span class="oneliner">
+                        {{selectedNFT.originChain}}
+                      </span>
+                    </label>
+                    <label v-if="selectedNFT.deployed && selectedNFT.alive" class="qux-label">
+                        <span class="oneliner">
+                        <b>Deployed at</b>
+                        </span>
+                        <span class="oneliner">
+                        {{selectedNFT.deployed}}
                         </span>
                     </label>
                     <label class="qux-label">
-                        <span >Description: {{selectedNFT.description}}
+                        <span class="oneliner">
+                        <b>Status</b>
                         </span>
-                    </label>
-                    <label class="qux-label">
-                        <span >Origin: {{selectedNFT.originChain}}
+                        <span class="oneliner">
+                        {{getAliveText()}}
                         </span>
-                    </label>
-                    <label v-if="selectedNFT.alive" class="qux-label">
-                        <span >Deployed at: {{selectedNFT.deployed ? selectedNFT.deployed : "Not deployed"}}
-                        </span>
-                    </label>
-                    <label class="qux-label">
-                        <span >{{getAliveText()}}
-                        </span>
-                    </label>
+                  </label>
                 </div>
             </div>
         </div>
@@ -170,6 +190,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.oneliner {
+  display: block;
+}
 .top-right-icon{
     position: absolute;
     width: 2%;
@@ -177,5 +200,6 @@ export default {
 .nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(@/assets/img/Cards_4.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .qux-template-Image6{min-height:100%;border:0px solid #333333;background-size:100% 100%;border:0px solid #333;}
 .Label4{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:18px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:6;grid-column-end:10;grid-row-start:4;grid-row-end:5;z-index:191;}
+.Grid{color:#333333;border:0px solid #333333;grid-column-start:4;grid-column-end:12;grid-row-start:2;grid-row-end:7;z-index:62;display:flex;flex-wrap:wrap;}
 
 </style>
