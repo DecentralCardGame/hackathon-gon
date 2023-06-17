@@ -1,12 +1,11 @@
 <template>
 <div class="qux-container qux-element RoundedRectangle">
-
     <div v-if="!nft.empty">
         <label class="qux-label qux-element Label57">
-            <span v-if="!defend" class="qux-common-label">
+            <span v-if="defend" class="qux-common-label">
                 The Defenders of {{title}} are united behind their leader:
             </span>
-            <span v-if="defend && !nft.empty" class="qux-common-label">
+            <span v-if="!defend && !nft.empty" class="qux-common-label">
                 The Attackers have captured {{title}} with their leader:
             </span>
         </label>
@@ -101,7 +100,7 @@ export default {
 }
 .imageNft{
     width: 80%;
-    height: 80%;
+    height: 90%;
     display: flex;
     justify-content: flex-end;
 }

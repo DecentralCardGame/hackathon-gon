@@ -128,10 +128,12 @@ class chainWarsGame {
         }
     }
     fight() {
+        console.log("this.chains", this.chains)
         // 10000 equals to 10s of min. waiting between fights
-        if ( new Date() - this.lastFight < 10000 ) return " Last fight is not long ago, please give the fighters some rest."
+        //if ( new Date() - this.lastFight < 10000 ) return " Last fight is not long ago, please give the fighters some rest."
         let report = ""
-        R.forEachObjIndexed((chain) => {
+        R.forEachObjIndexed((chain, index) => {
+            console.log("chain ", index)
             if (R.length(R.keys(chain.attackers)) > 0 && R.length(R.keys(chain.defenders)) > 0) {
                 // If there are attackers and defenders on a chain, zip together fight pairs
                 let fights = R.zip(R.keys(chain.defenders), R.keys(chain.attackers))
@@ -159,12 +161,14 @@ class chainWarsGame {
                     } 
                 })
 
+                console.log("check if attackers have won", chain.attackers)
                 // check if attackers have succeeded
                 if (R.length(R.keys(chain.attackers)) > 0) {
                     let attackingChains = R.countBy(nft => nft.originChain, R.values(chain.attackers))
                     let max = R.reduce(R.max, 0, R.values(attackingChains))
                     let rulers = R.keys(R.filter(x => x >= max, attackingChains))
 
+                    console.log("adding rulers", rulers, "from:", attackingChains)
                     chain.capturedBy = rulers
                     log += rulers + " has won and seized control over " + chain.name + " - their banner is lifted over " + chain.name + "'s chain."
                 }
@@ -183,11 +187,15 @@ class chainWarsGame {
                 let max = R.reduce(R.max, 0, R.values(attackingChains))
                 let rulers = R.keys(R.filter(x => x >= max, attackingChains))
 
+                console.log("adding rulers", rulers, "from:", attackingChains)
                 chain.capturedBy = rulers
                 let log = "Without any resistance " + rulers + " has won and seized control over " + chain.name + " - their banner is lifted over " + chain.name + "'s chain."
                 chain.log.push(log)
                 this.fightCounter++
                 report += "Without a fight "+chain.name+" was captured! Check logs!"
+            }
+            else {
+                console.log("else case")
             }
         }, this.chains)
 

@@ -24,10 +24,10 @@ game.sendAttacker("asdf1", "1234", "juno")
 game.sendAttacker("asdf4", "1235", "juno")
 game.sendAttacker("asdf7", "0126", "stargaze")
 
-console.log(game.chains)
-game.fight()
+//console.log(game.chains)
+//game.fight()
 
-console.log(game.chains)
+//console.log(game.chains)
 
 game.sendDefender("asdf7", "0127", "stargaze")
 game.sendDefender("asdf7", "0128", "stargaze")

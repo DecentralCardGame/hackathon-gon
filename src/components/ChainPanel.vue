@@ -68,6 +68,7 @@ export default {
             else return ""
         },
         frontNFT() {
+            console.log("frontnft chain:", this.chain, "chain capturedby", this.chain.capturedBy, "attackers", this.chain.attackers)
             // if a chain is captured show the first attacker as frontNFT, otherwise show first defender if possible
             if (this.chain.capturedBy.length == 0) {
                 this.defending = true
@@ -76,8 +77,10 @@ export default {
                 }
                 else return { empty: true }
             }
-            else return this.chain.attackers[0]
-
+            else {
+                console.log("captured")
+                return R.values(this.chain.attackers)[0]
+            }
         }
     }
 }

@@ -3,11 +3,11 @@
         <div class="qux-container qux-element Leaderboard_detail">
             <div class="qux-container qux-element Leaderboardbox">
                 <label class="qux-label qux-element Label29">
-                    <span class="qux-common-label">Position
+                    <span class="qux-common-label">POSITION
                     </span>
                 </label>
                 <label class="qux-label qux-element Label30">
-                    <span class="qux-common-label">Chain
+                    <span class="qux-common-label">CHAIN
                     </span>
                 </label>
                 <div class="qux-container qux-element Group_1">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <label class="qux-label qux-element Label31">
-                    <span class="qux-common-label">Captures
+                    <span class="qux-common-label">CAPTURES
                     </span>
                 </label>
                 <div class="qux-container qux-element Group">
@@ -74,7 +74,7 @@
                 </label>
 
                 <label class="qux-label qux-element Stats Stats-title">
-                    <span class="qux-common-label">Chain War Stats
+                    <span class="qux-common-label"><b>Chain War Stats</b>
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-description Stats1">

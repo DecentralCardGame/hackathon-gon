@@ -13,15 +13,15 @@
             </div>
         </div>
         <label class="qux-label qux-element Label52">
-            <span class="qux-common-label">Attackers
+            <span class="qux-common-label"><b>ATTACKERS</b>
             </span>
         </label>
         <label class="qux-label qux-element Label54">
-            <span class="qux-common-label">Defenders
+            <span class="qux-common-label"><b>DEFENDERS</b>
             </span>
         </label>
         <label class="qux-label qux-element LabelLog">
-            <span class="qux-common-label">News: {{log}}
+            <span class="qux-common-label"><b>NEWS</b> {{log}}
             </span>
         </label>
         <label class="qux-label qux-element Label55">

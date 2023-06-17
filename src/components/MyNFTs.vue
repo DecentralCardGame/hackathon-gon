@@ -7,55 +7,82 @@
                 <div class="no-nft-info"
                   v-if="!selectedNFT">
                   <label class="qux-label" >
-                    <span >Select one of your NFT
+                    <span >Select one of your NFT for details
                     </span>
                   </label>
                 </div>
-                <div class="nft-info" 
-                    v-if="selectedNFT">
+                <div class="nft-info" v-if="selectedNFT">          
+                  <div>
+                    <img v-if="!isVideo(selectedNFT.imageUrl)" 
+                        class="full-nftimage"
+                        :src="selectedNFT.imageUrl"
+                    />
+                    <video autoplay 
+                        class="full-nftimage"
+                        v-if="isVideo(selectedNFT.imageUrl)"
+                        :src="selectedNFT.imageUrl" type="video/mp4"
+                    />
+                  </div>
 
-                    <button v-if="!attack && !defend" @click="attack = true">Attack</button>
-                    <button v-if="!attack && !defend" @click="defend = true">Defend</button>
-                    
-                    <button v-if="attack" @click="targetChain = 'Uptick';sendAttacker()">Attack Uptick</button>
-                    <button v-if="attack" @click="targetChain = 'Stargaze';sendAttacker()">Attack Stargaze</button>
-                    <button v-if="attack" @click="targetChain = 'Omniflix';sendAttacker()">Attack Omniflix</button>
-                    <button v-if="defend" @click="targetChain = 'Uptick';sendDefender()">Defend Uptick</button>
-                    <button v-if="defend" @click="targetChain = 'Stargaze';sendDefender()">Defend Stargaze</button>
-                    <button v-if="defend" @click="targetChain = 'Omniflix';sendDefender()">Defend Omniflix</button>
-                    
-                    <div>
-                      <img v-if="!isVideo(selectedNFT.imageUrl)" 
-                          class="full-nftimage"
-                          :src="selectedNFT.imageUrl"
-                      />
-                      <video autoplay 
-                          class="full-nftimage"
-                          v-if="isVideo(selectedNFT.imageUrl)"
-                          :src="selectedNFT.imageUrl" type="video/mp4"
-                      />
-                    </div>
+                  <label class="qux-label">
+                      <span class="oneliner">
+                        <b>Name</b>
+                      </span>
+                      <span class="oneliner"> 
+                        {{selectedNFT.name}}
+                      </span>
+                  </label>
+                  <label class="qux-label">
+                      <span class="oneliner">
+                        <b>Description</b>
+                      </span>
+                      <span class="oneliner">
+                        {{selectedNFT.description}}
+                      </span>
+                  </label>
+                  <label class="qux-label">
+                      <span class="oneliner">
+                        <b>Origin</b>
+                      </span>
+                      <span class="oneliner">
+                        {{selectedNFT.originChain}}
+                      </span>
+                  </label>
+                  <label v-if="selectedNFT.deployed" class="qux-label">
+                    <span class="oneliner">
+                      <b>Deployed at</b>
+                    </span>
+                    <span class="oneliner">
+                      {{selectedNFT.deployed}}
+                    </span>
+                  </label>
+                  <label class="qux-label">
+                    <span class="oneliner">
+                      <b>Status:</b>
+                    </span>
+                    <span class="oneliner">
+                      {{getAliveText()}}
+                    </span>
+                  </label>
 
-                    <label class="qux-label">
-                        <span >Name: {{selectedNFT.name}}
-                        </span>
-                    <label class="qux-label">
-                    </label>
-                        <span >Description: {{selectedNFT.description}}
-                        </span>
-                    <label class="qux-label">
-                    </label>
-                        <span >Origin: {{selectedNFT.originChain}}
-                        </span>
-                    <label class="qux-label">
-                    </label>
-                        <span >Deployed at: {{selectedNFT.deployed}}
-                        </span>
-                    </label>
-                    <label class="qux-label">
-                        <span >{{getAliveText()}}
-                        </span>
-                    </label>
+                  <div v-if="selectedNFT.originChain == 'Uptick'">
+                    <button @click="targetChain = 'Uptick'; sendDefender()">Defend Uptick</button>
+                  </div>
+                  <div v-if="selectedNFT.originChain == 'Stargaze'">
+                    <button @click="targetChain = 'Stargaze'; sendDefender()">Defend Stargaze</button>
+                  </div>
+                  <div v-if="selectedNFT.originChain == 'Omniflix'">
+                    <button @click="targetChain = 'Omniflix'; sendDefender()">Defend Omniflix</button>
+                  </div>
+                  <div v-if="selectedNFT.originChain != 'Uptick'">
+                    <button  @click="targetChain = 'Uptick'; sendAttacker()">Attack Uptick</button>
+                  </div>
+                  <div v-if="selectedNFT.originChain != 'Stargaze'">
+                    <button @click="targetChain = 'Stargaze'; sendAttacker()">Attack Stargaze</button>
+                  </div>
+                  <div v-if="selectedNFT.originChain != 'Omniflix'">
+                    <button @click="targetChain = 'Omniflix'; sendAttacker()">Attack Omniflix</button>
+                  </div> 
                 </div>
             </div>
         </div>
@@ -99,8 +126,6 @@ export default {
         irisAddresses: [],
         NFTs: [],
         selectedNFT: undefined,
-        attack: false,
-        defend: false,
         targetChain: null
     }
   },
@@ -117,14 +142,20 @@ export default {
   },
   methods: {
     getAliveText() {
-      return this.selectedNFT.alive ? "Alive" : "Died in a glorious battle at"+this.selectedNFT.deployed
+      if (!this.selectedNFT.alive)
+        return "Died in a glorious battle at " + this.selectedNFT.deployed
+      if (!this.selectedNFT.deployed)
+        return "Alive and idling"
+      if (this.selectedNFT.deployed==this.selectedNFT.originChain)
+        return "Alive and defending"
+      else
+        return "Alive and attacking"
     },
     isVideo(src) {
       return src.endsWith(".mp4")
     },
     async sendAttacker() {
       console.log("attacking", this.targetChain)
-      this.attack = false
       const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
@@ -134,11 +165,10 @@ export default {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       })
-      console.log(data)
+      console.log("res:", data)
     },
     async sendDefender() {
       console.log("defending", this.targetChain)
-      this.defend = false
       const {data} = await axios.post('https://nftarena.cc/sendDefender', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
@@ -148,12 +178,10 @@ export default {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       })
-      console.log(data)
+      console.log("res:", data)
     },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
-        this.attack = false
-        this.defend = false
         console.log("selectedNFT: ", this.selectedNFT)
     },
     chainwarsData() {
@@ -223,6 +251,18 @@ export default {
 </script>
 
 <style lang="scss">
+button {
+  color: white;
+  border-radius: 3px;
+  border-width: 0px;
+  border-color: rgb(51, 51, 51);
+  background: rgb(119, 119, 119);
+  margin: 5px;
+  padding: 5px;
+}
+.oneliner {
+  display: block;
+}
 
 .qux-repeater{overflow:auto;}
 

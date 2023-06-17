@@ -172,7 +172,7 @@ export default {
 <style scoped lang="scss">
 .top-right-icon{
     position: absolute;
-    width: 5%;
+    width: 2%;
 }
 .nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(@/assets/img/Cards_4.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .qux-template-Image6{min-height:100%;border:0px solid #333333;background-size:100% 100%;border:0px solid #333;}
