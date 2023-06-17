@@ -13,7 +13,7 @@
                 <div class="qux-container qux-element Group_1">
                     <div class="qux-container qux-element Circle6">
                         <div class="qux-container qux-element Circle7">
-                            <div class="qux-image qux-element Image9" :style="getChainLogo(1)">
+                            <div class="qux-image qux-element Image9" :style="getChainLogo(0)">
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="qux-container qux-element Group">
                     <div class="qux-container qux-element Circle8">
                         <div class="qux-container qux-element Circle9">
-                            <div class="qux-image qux-element Image10">
+                            <div class="qux-image qux-element Image10" :style="getChainLogo(1)">
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                 <div class="qux-container qux-element Group_2">
                     <div class="qux-container qux-element Circle10">
                         <div class="qux-container qux-element Circle11">
-                            <div class="qux-image qux-element Image11">
+                            <div class="qux-image qux-element Image11" :style="getChainLogo(2)">
                             </div>
                         </div>
                     </div>
@@ -145,9 +145,6 @@ export default {
 
     data() {
     return {
-        Stargaze: {},
-        Omniflix: {},
-        Uptick: {},
         stats: {
             chains: 0,
             players: 0,
@@ -171,18 +168,18 @@ export default {
         this.getStats()
     },
     methods: {
-        getChainLogo () {
-            if (this.title == "Omniflix")
+        getChainLogo (id) {
+            if (this.leaders[id].name == "Omniflix")
                 return {
-                    backgroundImage: `url(${require('@/assets/img/Cards_1.png')})`
+                    backgroundImage: `url(${require('@/assets/img/omniflix.png')})`
                 }
-            if (this.title == "Uptick")
+            else if (this.leaders[id].name == "Uptick")
                 return {
-                    backgroundImage: `url(${require('@/assets/img/Cards_2.png')})`
+                    backgroundImage: `url(${require('@/assets/img/uptick.png')})`
                 }
-            if (this.title == "Stargaze")
+            else if (this.leaders[id].name == "Stargaze")
                 return {
-                    backgroundImage: `url(${require('@/assets/img/Cards_3.png')})`
+                    backgroundImage: `url(${require('@/assets/img/stargaze.png')})`
             }
         },
         getStats () {
@@ -263,9 +260,9 @@ export default {
 </script>
 
 <style lang="scss">
-.Start .Image9{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aYdfc3zR9P21mee6ZPFy9zexI1VeT2ZBmsFN8aLg1Bg738hOJqF2e2.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
-.Start .Image10{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aCXrBUuuR6Jzg7IFcNLzNXyTDANM6WKTlWayOxIPndvDAFRGyj0bqK.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
-.Start .Image11{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aQtGBelHc6VxmiQmdOz4xdeCXskO837xJHCPFaGpbEByyRXMyEiGrK.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Image9{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/omniflix.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Image10{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/uptick.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Image11{width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/stargaze.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
 .Leaderboardbox{
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;

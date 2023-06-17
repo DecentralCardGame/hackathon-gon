@@ -17,6 +17,11 @@ const routes = [
     name: 'Leaderboard',
     component: Start
   },
+  {
+    path: '/ChainDetails/:name',
+    name: 'ChainDetails',
+    component: Start
+  },
 ]
 
 const router = createRouter({

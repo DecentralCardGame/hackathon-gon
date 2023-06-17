@@ -1,6 +1,5 @@
 <template>
-
-    <div class="qux-container qux-element MyNFTs BG">
+  	<div class="qux-container qux-element MyNFTs BG">
         <div class="qux-image qux-element MyNFTs nfttitleimage"></div>
         
         <div class="qux-container qux-element Leaderboard_detail">
@@ -241,14 +240,13 @@ export default {
     text-align: center;
     margin: auto;
     width: 90%;
-
 }
 
 /*! CSS Used from: Embedded */
 .qux-screen.MyNFTs{min-height:1372px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:49px 1px 494px minmax(60px, auto) minmax(767px, auto) 1fr;background-color:#263236;height:100%;}
 
 .MyNFTs .BG{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#263236;grid-column-start:1;grid-column-end:2;grid-row-start:5;grid-row-end:6;z-index:11;display:grid;grid-template-columns:minmax(0,1fr) 280px 1% 211px 13px 642px 1px minmax(0,1fr);grid-template-rows:25px 29px 22px 69px 25px minmax(559px, auto) 1fr;}
-.MyNFTs .nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aUzznnw2OeMFGz17eZy9RpOBdQ5hz0WcH9fqW4j4llY2Jhp7sR0hQS.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.MyNFTs .nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(@/assets/img/Cards_MyNFTs.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
 .MyNFTs .Leaderboard_detail{border:0px solid transparent;grid-column-start:2;grid-column-end:3;grid-row-start:6;grid-row-end:7;z-index:15;display:flex;flex-direction:column;}
 .MyNFTs .RoundedRectangle7{

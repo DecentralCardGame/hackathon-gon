@@ -68,7 +68,6 @@ export default {
             if (this.chain.capturedBy.length == 0) {
                 this.defending = true
                 if (R.keys(this.chain.defenders).length > 0) {
-                    console.log("return", R.values(this.chain.defenders)[0])
                     return R.values(this.chain.defenders)[0]
                 }
                 else return { empty: true }

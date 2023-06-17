@@ -3,61 +3,56 @@
   <div id="app" data-v-app="">
     <div class="qux">
         <div class="qux-container qux-element Start qux-screen">
-            <PageHeader
+            <PageHeader/>
+            <Leaderboard v-if="isLeaderboardVisible"/>
+            <MyNFTs v-if="isMyNFTsVisible"/>
+            <ChainDetails v-if="isChainDetailsVisible"
+              :name="$route.params.id"
             />
-            
-            <Leaderboard v-if="isLeaderboardVisible"
-            />
-
-            <MyNFTs v-if="isMyNFTsVisible"
-            />
-
-
         </div>
     </div>
     </div>
 </template>
 
 <script>
-//import axios from 'axios'
-//import * as R from "ramda"
-
 import PageHeader from '@/components/PageHeader'
 import Leaderboard from '@/components/Leaderboard'
 import MyNFTs from '@/components/MyNFTs'
+import ChainDetails from '@/components/ChainDetails'
 
 export default {
   name: 'Home',
-  components: {PageHeader, Leaderboard, MyNFTs},
+  components: {PageHeader, Leaderboard, MyNFTs, ChainDetails},
   data: function() {
     return {
+      isChainDetailsVisible: false,
       isLeaderboardVisible: true,
       isMyNFTsVisible: false,
-      config: {
-      }
     }
   },
   watch:{
-    $route (to, from){
+    $route (to){
       if (to.name == "Leaderboard") {
-        console.log("leaderboard")
         this.isLeaderboardVisible = true
+        this.isChainDetailsVisible = false
         this.isMyNFTsVisible = false
       }
       else if (to.name == "MyNFTs") {
-        console.log("mynfts")
         this.isLeaderboardVisible = false
+        this.isChainDetailsVisible = false
         this.isMyNFTsVisible = true
       }
-        
-      console.log("route to", to, "from", from)
+      else if (to.name == "ChainDetails") {
+        console.log("params", this.$route.params.name)
+        this.isLeaderboardVisible = false
+        this.isChainDetailsVisible = true
+        this.isMyNFTsVisible = false
+      }
     }
   },   
   methods: {
-    
   },
   mounted () {
-
   }
 }
 </script>

@@ -1,11 +1,13 @@
 <template>
+<router-link :to="'/ChainDetails/'+title">
     <div class="qux-container qux-element qux-action Image5"
         :style="getBackground()"
-    >
+    >    
         <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label2">
             <span class="qux-common-label">{{id}}
             </span>
         </a>
+        
         <!--a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label3">
             <span class="qux-common-label">Chain
             </span>
@@ -52,6 +54,7 @@
             </div>
         </div>
     </div>
+</router-link>
 </template>
 
 <script>
@@ -90,11 +93,11 @@ export default {
             return {
                 backgroundImage: `url(${require('@/assets/img/omniflix.png')})`
             }
-        if (this.title == "Uptick")
+        else if (this.title == "Uptick")
             return {
                 backgroundImage: `url(${require('@/assets/img/uptick.png')})`
             }
-        if (this.title == "Stargaze")
+        else if (this.title == "Stargaze")
             return {
                 backgroundImage: `url(${require('@/assets/img/stargaze.png')})`
         }
@@ -104,11 +107,11 @@ export default {
             return {
                 backgroundImage: `url(${require('@/assets/img/Cards_1.png')})`
             }
-        if (this.title == "Uptick")
+        else if (this.title == "Uptick")
             return {
                 backgroundImage: `url(${require('@/assets/img/Cards_2.png')})`
             }
-        if (this.title == "Stargaze")
+        else if (this.title == "Stargaze")
             return {
                 backgroundImage: `url(${require('@/assets/img/Cards_3.png')})`
         }

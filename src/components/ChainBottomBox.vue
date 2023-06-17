@@ -1,14 +1,18 @@
 <template>
 <div class="qux-container qux-element RoundedRectangle">
 
-    <div>
+    <div v-if="!nft.empty">
         <label class="qux-label qux-element Label57">
-            <span v-if="!defend && !nft.empty" class="qux-common-label">
+            <span v-if="!defend" class="qux-common-label">
                 The Defenders of {{title}} are united behind their leader:
             </span>
             <span v-if="defend && !nft.empty" class="qux-common-label">
                 The Attackers have captured {{title}} with their leader:
             </span>
+        </label>
+    </div>
+    <div v-if="nft.empty">
+        <label class="qux-label qux-element Label57">
             <span v-if="nft.empty" class="qux-common-label">
                 No NFT Fighters are deployed at {{title}}.
             </span>
@@ -61,7 +65,6 @@ export default {
     }
   },
   mounted () {
-    console.log("frontnft", this.nft)
   },
   methods: {
     isVideo(src) {
