@@ -10,8 +10,8 @@
     <div class="qux-container qux-element Card top" :class="'pos'+pos">
         <ChainInfoBox
             :title="chain.name"
-            :attackers="0"
-            :defenders="0"
+            :attackers="attackers"
+            :defenders="defenders"
             :log="shortLog()"
         />
     </div>
@@ -35,7 +35,9 @@ export default {
 
     data() {
     return {
-        defending: false
+        defending: false,
+        attackers: 0,
+        defenders: 0
     }
     },
     props: {
@@ -56,6 +58,8 @@ export default {
         },
     },
     mounted () {
+        this.defenders = R.keys(this.chain.attackers).length
+        this.attackers = R.keys(this.chain.defenders).length
     },
     methods: {
         shortLog() {

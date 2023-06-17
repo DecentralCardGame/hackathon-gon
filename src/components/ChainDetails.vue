@@ -1,13 +1,28 @@
 <template>
     <div class="qux-container qux-element MyNFTs BG">
-        <div class="qux-image qux-element MyNFTs nfttitleimage"></div>
+        <div class="qux-image qux-element MyNFTs nfttitleimage">
+            <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label4">
+                <span class="qux-common-label">{{$route.params.name}}
+                </span>
+            </a>
+
+            <div class="qux-container qux-element qux-template-Circle Circle">
+                <div class="qux-container qux-element qux-template-Circle1 Circle1">
+                    <div class="qux-image qux-element qux-template-Image6" 
+                        :style="getLogo()"
+                    >
+
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="qux-container qux-element Leaderboard_detail">
             <div class="qux-container qux-element RoundedRectangle7">
                 <div class="no-nft-info"
                   v-if="!selectedNFT">
                   <label class="qux-label" >
-                    <span >Select one of {{$route.params.name}}'s NFTs
+                    <span>Select one of {{$route.params.name}}'s NFTs
                     </span>
                   </label>
                 </div>
@@ -29,20 +44,23 @@
                     <label class="qux-label">
                         <span >Name: {{selectedNFT.name}}
                         </span>
-                    <label class="qux-label">
                     </label>
+                    <label class="qux-label">
                         <span >Description: {{selectedNFT.description}}
                         </span>
-                    <label class="qux-label">
                     </label>
+                    <label class="qux-label">
                         <span >Origin: {{selectedNFT.originChain}}
                         </span>
-                    <label class="qux-label">
                     </label>
-                        <span >Deployed at: {{selectedNFT.deployed}}
+                    <label v-if="selectedNFT.alive" class="qux-label">
+                        <span >Deployed at: {{selectedNFT.deployed ? selectedNFT.deployed : "Not deployed"}}
                         </span>
                     </label>
-                    
+                    <label class="qux-label">
+                        <span >{{getAliveText()}}
+                        </span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -55,16 +73,20 @@
                     clickedIndex = index;
                     nftClicked(index);
                 ">
-                    <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
+                        <img class="top-right-icon"
+                            :src="getTopRightIcon(index)"
+                        />
+                    
+                        <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
                         :id="index"
                         :src="nft.imageUrl"
-                    />
-                    <video autoplay
-                        v-if="isVideo(nft.imageUrl)" 
-                        class="nftimage"
-                        :id="index"
-                        :src="nft.imageUrl" type="video/mp4"
-                    />
+                        />
+                        <video autoplay
+                            v-if="isVideo(nft.imageUrl)" 
+                            class="nftimage"
+                            :id="index"
+                            :src="nft.imageUrl" type="video/mp4"
+                        />
                 </li>
             </ul>
         </div>
@@ -84,17 +106,23 @@ export default {
     }
   },
   props: {
-    title: {
-        type: String,
-        default () {
-            return "noname"
-        },
-    },
   },
   mounted () {
     this.getNFTs()
   },
   methods: {
+    getTopRightIcon(index) {
+        console.log()
+        if (this.NFTs[index].alive == false)
+            return require('@/assets/img/dead.png')
+        if (this.NFTs[index].originChain == this.NFTs[index].deployed)
+            return require('@/assets/img/defender.png')
+        if (this.NFTs[index].deployed && this.NFTs[index].originChain != this.NFTs[index].deployed)
+            return require('@/assets/img/attacker.png')
+    },
+    getAliveText() {
+      return this.selectedNFT.alive ? "Alive" : "Died in a glorious battle at "+this.selectedNFT.deployed
+    },
     isVideo(src) {
       return src.endsWith(".mp4")
     },
@@ -103,6 +131,20 @@ export default {
         this.attack = false
         this.defend = false
         console.log("selectedNFT: ", this.selectedNFT)
+    },
+    getLogo () {
+        if (this.$route.params.name == "Omniflix")
+            return {
+                backgroundImage: `url(${require('@/assets/img/omniflix.png')})`
+            }
+        else if (this.$route.params.name == "Uptick")
+            return {
+                backgroundImage: `url(${require('@/assets/img/uptick.png')})`
+            }
+        else if (this.$route.params.name == "Stargaze")
+            return {
+                backgroundImage: `url(${require('@/assets/img/stargaze.png')})`
+        }
     },
     getNFTs () {
         const options = {
@@ -128,5 +170,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.top-right-icon{
+    position: absolute;
+    width: 5%;
+}
 .nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(@/assets/img/Cards_4.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.qux-template-Image6{min-height:100%;border:0px solid #333333;background-size:100% 100%;border:0px solid #333;}
+.Label4{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:18px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:6;grid-column-end:10;grid-row-start:4;grid-row-end:5;z-index:191;}
+
 </style>

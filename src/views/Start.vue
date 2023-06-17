@@ -6,9 +6,7 @@
             <PageHeader/>
             <Leaderboard v-if="isLeaderboardVisible"/>
             <MyNFTs v-if="isMyNFTsVisible"/>
-            <ChainDetails v-if="isChainDetailsVisible"
-              :name="$route.params.id"
-            />
+            <ChainDetails v-if="isChainDetailsVisible"/>
         </div>
     </div>
     </div>
@@ -58,6 +56,11 @@ export default {
 </script>
 
 <style lang="scss">
+.ImageAttacker{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/attacker.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.ImageDefender{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.ImageDead{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.ImageNews{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/news.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+
 /*! CSS Used from: https://nftarena.cc/css/app.f1c45761.css */
 #app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-align:center;color:#2c3e50;}
 /*! CSS Used from: Embedded */

@@ -52,7 +52,10 @@
                         <span >Deployed at: {{selectedNFT.deployed}}
                         </span>
                     </label>
-                    
+                    <label class="qux-label">
+                        <span >{{getAliveText()}}
+                        </span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -113,6 +116,9 @@ export default {
     this.chainwarsData()
   },
   methods: {
+    getAliveText() {
+      return this.selectedNFT.alive ? "Alive" : "Died in a glorious battle at"+this.selectedNFT.deployed
+    },
     isVideo(src) {
       return src.endsWith(".mp4")
     },

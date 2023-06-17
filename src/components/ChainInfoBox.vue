@@ -1,15 +1,15 @@
 <template>
     <div class="qux-container qux-element RoundedRectangle9">
         <div class="qux-container qux-element Group_6">
-            <div class="qux-image qux-element Image14">
+            <div class="qux-image qux-element ImageAttacker">
             </div>
         </div>
         <div class="qux-container qux-element Group_7">
-            <div class="qux-image qux-element Image15">
+            <div class="qux-image qux-element ImageDefender">
             </div>
         </div>
         <div class="qux-container qux-element Group_8">
-            <div class="qux-image qux-element Image16">
+            <div class="qux-image qux-element ImageNews">
             </div>
         </div>
         <label class="qux-label qux-element Label52">
@@ -65,7 +65,6 @@ export default {
     }
   },
   mounted () {
-    console.log("log", this.log)
   },
   methods: {
   }
@@ -81,10 +80,6 @@ export default {
 .Circle17{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#ffffff;width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:2px;display:flex;flex-direction:column;}
 .Circle18{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#cc0000;width:12px;margin-left:auto;margin-right:auto;height:12px;margin-top:0px;display:flex;flex-direction:column;}
 .Circle19{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#ffffff;width:8px;margin-left:auto;margin-right:auto;height:8px;margin-top:2px;display:flex;flex-direction:column;}
-
-.Image14{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/attacker.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
-.Image15{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
-.Image16{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/news.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
 .Label52{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:4;grid-column-end:5;grid-row-start:3;grid-row-end:4;}
 .Label54{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:10px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:4;grid-column-end:5;grid-row-start:5;grid-row-end:6;}
