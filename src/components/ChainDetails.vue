@@ -1,12 +1,12 @@
 <template>
     <div class="qux-container qux-element MyNFTs BG">
         <div class="qux-image qux-element MyNFTs nfttitleimage">
-            <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label4">
+            <div class="qux-label qux-element qux-action LabelTitle">
                 <span class="qux-common-label">{{$route.params.name}}
                 </span>
-            </a>
+            </div>
 
-            <div class="qux-container qux-element qux-template-Circle Circle">
+            <div class="qux-container qux-element qux-template-Circle Circle Group_88">
                 <div class="qux-container qux-element qux-template-Circle1 Circle1">
                     <div class="qux-image qux-element qux-template-Image6" 
                         :style="getLogo()"
@@ -93,20 +93,20 @@
                     clickedIndex = index;
                     nftClicked(index);
                 ">
-                        <img class="top-right-icon"
-                            :src="getTopRightIcon(index)"
-                        />
-                    
-                        <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
+                    <img class="top-right-icon"
+                        :src="getTopRightIcon(index)"
+                    />
+                
+                    <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
+                    :id="index"
+                    :src="nft.imageUrl"
+                    />
+                    <video autoplay
+                        v-if="isVideo(nft.imageUrl)" 
+                        class="nftimage"
                         :id="index"
-                        :src="nft.imageUrl"
-                        />
-                        <video autoplay
-                            v-if="isVideo(nft.imageUrl)" 
-                            class="nftimage"
-                            :id="index"
-                            :src="nft.imageUrl" type="video/mp4"
-                        />
+                        :src="nft.imageUrl" type="video/mp4"
+                    />
                 </li>
             </ul>
         </div>
@@ -132,16 +132,24 @@ export default {
   },
   methods: {
     getTopRightIcon(index) {
-        console.log()
         if (this.NFTs[index].alive == false)
             return require('@/assets/img/dead.png')
+        if (!this.NFTs[index].deployed)
+            return ""
         if (this.NFTs[index].originChain == this.NFTs[index].deployed)
             return require('@/assets/img/defender.png')
         if (this.NFTs[index].deployed && this.NFTs[index].originChain != this.NFTs[index].deployed)
             return require('@/assets/img/attacker.png')
     },
     getAliveText() {
-      return this.selectedNFT.alive ? "Alive" : "Died in a glorious battle at "+this.selectedNFT.deployed
+      if (!this.selectedNFT.alive)
+        return "Died in a glorious battle at " + this.selectedNFT.deployed
+      if (!this.selectedNFT.deployed)
+        return "Alive and idling"
+      if (this.selectedNFT.deployed==this.selectedNFT.originChain)
+        return "Alive and defending"
+      else
+        return "Alive and attacking"
     },
     isVideo(src) {
       return src.endsWith(".mp4")
@@ -150,7 +158,6 @@ export default {
         this.selectedNFT = this.NFTs[index]
         this.attack = false
         this.defend = false
-        console.log("selectedNFT: ", this.selectedNFT)
     },
     getLogo () {
         if (this.$route.params.name == "Omniflix")
@@ -193,13 +200,13 @@ export default {
 .oneliner {
   display: block;
 }
-.top-right-icon{
-    position: absolute;
-    width: 2%;
-}
-.nfttitleimage{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:5;z-index:12;border:0px solid #333333;background-image:url(@/assets/img/Cards_4.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.MyNFTs .BG{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#263236;grid-column-start:1;grid-column-end:2;grid-row-start:5;grid-row-end:6;z-index:11;display:grid;grid-template-columns:minmax(0,1fr) 280px 1% 211px 13px 642px 1px minmax(0,1fr);grid-template-rows:25px 29px 22px 69px 25px minmax(559px, auto) 1fr;}
+
+.Image5{width:280px;margin-left:auto;margin-right:auto;height:120px;margin-top:0px;display:grid;grid-template-columns:4.6% 39px 4.6% minmax(0,1fr) 4.6% 26px 3px 12px 23px 41px 5.4%;grid-template-rows:18px 11px 2px 10px 13px 11px 11px 1px 10px 2px 11px 1fr;border:0px solid #333333;background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+
+.nfttitleimage{display:grid;grid-template-columns:4.6% 39px 4.6% minmax(0,1fr) 4.6% 26px 3px 12px 23px 41px 5.4%;grid-template-rows:18px 11px 2px 10px 13px 11px 11px 1px 10px 2px 11px 1fr;border:0px solid #333333;background-image:url(@/assets/img/Cards_4.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .qux-template-Image6{min-height:100%;border:0px solid #333333;background-size:100% 100%;border:0px solid #333;}
-.Label4{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:18px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:6;grid-column-end:10;grid-row-start:4;grid-row-end:5;z-index:191;}
+.LabelTitle{color:#ffffff;text-align:left;font-family:Roboto, " sans-serif";font-size:18px;font-weight:bold;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:6;grid-column-end:10;grid-row-start:4;grid-row-end:5;z-index:191;}
 .Grid{color:#333333;border:0px solid #333333;grid-column-start:4;grid-column-end:12;grid-row-start:2;grid-row-end:7;z-index:62;display:flex;flex-wrap:wrap;}
 
 </style>

@@ -78,7 +78,7 @@
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-description Stats1">
-                    <span class="qux-common-label">Total Chains
+                    <span class="qux-common-label"><b>Total Chains</b>
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-data Stats1">
@@ -86,7 +86,7 @@
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-description Stats2">
-                    <span class="qux-common-label">Total Fights
+                    <span class="qux-common-label"><b>Total Fights</b>
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-data Stats2">
@@ -94,7 +94,7 @@
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-description Stats3">
-                    <span class="qux-common-label">Alive NFTs
+                    <span class="qux-common-label"><b>Alive NFTs</b>
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-data Stats3">
@@ -102,14 +102,21 @@
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-description Stats4">
-                    <span class="qux-common-label">Fallen NFTs
+                    <span class="qux-common-label"><b>Fallen NFTs</b>
                     </span>
                 </label>
                 <label class="qux-label qux-element Stats Stats-data Stats4">
                     <span class="qux-common-label">{{stats.fallenNFTs}}
                     </span>
                 </label>
-
+                <label class="qux-label qux-element Stats Stats-description Stats5">
+                    <span class="qux-common-label"><b>Loaded Wallets</b>
+                    </span>
+                </label>
+                <label class="qux-label qux-element Stats Stats-data Stats5">
+                    <span class="qux-common-label">{{stats.players}}
+                    </span>
+                </label>
             </div>
         </div>
     
@@ -289,7 +296,7 @@ export default {
 }
 .Stats-description {
     grid-column-start:3;
-    grid-column-end:6;
+    grid-column-end:8;
 }
 .Stats-data {
     grid-column-start:12;
@@ -317,5 +324,8 @@ export default {
     grid-row-start:19;
     grid-row-end:20;
 }
-
+.Stats5{
+    grid-row-start:20;
+    grid-row-end:21;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
     <div class="qux-container qux-element InfoGrid">
         <div class="qux-container qux-element Group_Attacker">
-            <div class="qux-image qux-element ImageAttacker">
+            <div class="qux-image qux-element ImageAttacker-white">
             </div>
         </div>
         <div class="qux-container qux-element Group_Defender">
-            <div class="qux-image qux-element ImageDefender">
+            <div class="qux-image qux-element ImageDefender-white">
             </div>
         </div>
         <div class="qux-container qux-element Group_News">

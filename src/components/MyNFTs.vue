@@ -58,31 +58,40 @@
                   </label>
                   <label class="qux-label">
                     <span class="oneliner">
-                      <b>Status:</b>
+                      <b>Status</b>
                     </span>
                     <span class="oneliner">
                       {{getAliveText()}}
                     </span>
                   </label>
-
-                  <div v-if="selectedNFT.originChain == 'Uptick'">
-                    <button @click="targetChain = 'Uptick'; sendDefender()">Defend Uptick</button>
-                  </div>
-                  <div v-if="selectedNFT.originChain == 'Stargaze'">
-                    <button @click="targetChain = 'Stargaze'; sendDefender()">Defend Stargaze</button>
-                  </div>
-                  <div v-if="selectedNFT.originChain == 'Omniflix'">
-                    <button @click="targetChain = 'Omniflix'; sendDefender()">Defend Omniflix</button>
-                  </div>
-                  <div v-if="selectedNFT.originChain != 'Uptick'">
-                    <button  @click="targetChain = 'Uptick'; sendAttacker()">Attack Uptick</button>
-                  </div>
-                  <div v-if="selectedNFT.originChain != 'Stargaze'">
-                    <button @click="targetChain = 'Stargaze'; sendAttacker()">Attack Stargaze</button>
-                  </div>
-                  <div v-if="selectedNFT.originChain != 'Omniflix'">
-                    <button @click="targetChain = 'Omniflix'; sendAttacker()">Attack Omniflix</button>
+                  <div v-if="!orderSent">
+                    <div v-if="selectedNFT.originChain == 'Uptick'">
+                      <button @click="targetChain = 'Uptick'; sendDefender()">Defend Uptick</button>
+                    </div>
+                    <div v-if="selectedNFT.originChain == 'Stargaze'">
+                      <button @click="targetChain = 'Stargaze'; sendDefender()">Defend Stargaze</button>
+                    </div>
+                    <div v-if="selectedNFT.originChain == 'Omniflix'">
+                      <button @click="targetChain = 'Omniflix'; sendDefender()">Defend Omniflix</button>
+                    </div>
+                    <div v-if="selectedNFT.originChain != 'Uptick'">
+                      <button  @click="targetChain = 'Uptick'; sendAttacker()">Attack Uptick</button>
+                    </div>
+                    <div v-if="selectedNFT.originChain != 'Stargaze'">
+                      <button @click="targetChain = 'Stargaze'; sendAttacker()">Attack Stargaze</button>
+                    </div>
+                    <div v-if="selectedNFT.originChain != 'Omniflix'">
+                      <button @click="targetChain = 'Omniflix'; sendAttacker()">Attack Omniflix</button>
+                    </div>
                   </div> 
+                  <label v-if="orderSent" class="qux-label">
+                    <span class="oneliner">
+                      <b>Order</b>
+                    </span>
+                    <span class="oneliner">
+                      {{apiRes}}
+                    </span>
+                  </label>
                 </div>
             </div>
         </div>
@@ -95,6 +104,9 @@
                     clickedIndex = index;
                     nftClicked(index);
                 ">
+                    <img class="top-right-icon"
+                        :src="getTopRightIcon(index)"
+                    />
                     <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
                         :id="index"
                         :src="nft.imageUrl"
@@ -126,7 +138,9 @@ export default {
         irisAddresses: [],
         NFTs: [],
         selectedNFT: undefined,
-        targetChain: null
+        targetChain: null,
+        orderSent: false,
+        apiRes: "",
     }
   },
   props: {
@@ -141,6 +155,16 @@ export default {
     this.chainwarsData()
   },
   methods: {
+    getTopRightIcon(index) {
+        if (this.NFTs[index].alive == false)
+            return require('@/assets/img/dead.png')
+        if (!this.NFTs[index].deployed)
+            return ""
+        if (this.NFTs[index].originChain == this.NFTs[index].deployed)
+            return require('@/assets/img/defender.png')
+        if (this.NFTs[index].deployed && this.NFTs[index].originChain != this.NFTs[index].deployed)
+            return require('@/assets/img/attacker.png')
+    },
     getAliveText() {
       if (!this.selectedNFT.alive)
         return "Died in a glorious battle at " + this.selectedNFT.deployed
@@ -155,8 +179,7 @@ export default {
       return src.endsWith(".mp4")
     },
     async sendAttacker() {
-      console.log("attacking", this.targetChain)
-      const {data} = await axios.post('https://nftarena.cc/sendAttacker', {
+      this.apiRes = await axios.post('https://nftarena.cc/sendAttacker', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
           attackChain: this.targetChain
@@ -165,11 +188,12 @@ export default {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       })
-      console.log("res:", data)
+      if (this.apiRes.data && this.apiRes.data.status)
+        this.apiRes = this.apiRes.data.status
+      this.orderSent = true
     },
     async sendDefender() {
-      console.log("defending", this.targetChain)
-      const {data} = await axios.post('https://nftarena.cc/sendDefender', {
+      this.apiRes = await axios.post('https://nftarena.cc/sendDefender', {
           collection: this.selectedNFT.collection,
           tokenId: this.selectedNFT.tokenId,
           defendChain: this.targetChain
@@ -178,10 +202,13 @@ export default {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       })
-      console.log("res:", data)
+      if (this.apiRes.data && this.apiRes.data.status)
+        this.apiRes = this.apiRes.data.status
+      this.orderSent = true
     },
     nftClicked(index) {
         this.selectedNFT = this.NFTs[index]
+        this.orderSent = false
         console.log("selectedNFT: ", this.selectedNFT)
     },
     chainwarsData() {
@@ -260,6 +287,13 @@ button {
   margin: 5px;
   padding: 5px;
 }
+button:hover {
+  margin: 3px;
+  border: 2px solid white;
+}
+button:active {
+  background: rgb(142, 54, 50);
+}
 .oneliner {
   display: block;
 }
@@ -312,11 +346,6 @@ button {
 .nftimage{
     width: 200px;
     height: 200px;
-    object-fit: cover;
-}
-.full-nftimage{
-    width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 body{margin:0px;font-family:'Helvetica Neue', 'Helvetica', sans-serif;}

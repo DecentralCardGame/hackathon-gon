@@ -1,16 +1,13 @@
 <template>
-    <div class="qux-container qux-element Box">
+    <a href="https://discord.gg/UUAMmekQTV" class="qux-container qux-element Box"> 
         <div class="qux-image qux-element Image2">
         </div>
-
         <label class="qux-label qux-element qux-valign-middle Label">
             <span class="qux-common-label">
                 Join us on Discord!
             </span>
         </label>
-                
-    </div>
-
+     </a>
     <div class="qux-container qux-element Box1">
         <div class="qux-image qux-element Image1">
         </div>
@@ -39,6 +36,23 @@
 </script>
 
 <style lang="scss">
+.Box{
+    color:#ffffff;
+    text-align:left;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:14px;
+    letter-spacing:0px;
+    line-height:1.4;
+    border:0px solid #333333;
+    background-color:#1d2126;
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:1;
+    grid-row-end:3;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 159px 1.1% 30px 3.1%;
+    grid-template-rows:10px 0px 32px 1fr;
+}
 a { 
     text-decoration: none;
     color: inherit;

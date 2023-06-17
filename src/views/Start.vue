@@ -56,8 +56,15 @@ export default {
 </script>
 
 <style lang="scss">
+.top-right-icon{
+    position: absolute;
+    width: 2%;
+    margin: 5px;
+}
 .ImageAttacker{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/attacker.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .ImageDefender{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.ImageAttacker-white{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/attacker2.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.ImageDefender-white{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender2.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .ImageDead{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .ImageNews{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/news.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
@@ -75,7 +82,12 @@ export default {
     
     border-radius: 5px;
 }
-
+.full-nftimage{
+    margin-top:20px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 /*! CSS Used from: https://nftarena.cc/css/app.f1c45761.css */
 #app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-align:center;color:#2c3e50;}
 /*! CSS Used from: Embedded */
@@ -97,8 +109,7 @@ export default {
 .qux-template-Circle{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#a8d324;}
 .qux-template-Circle1{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#ffffff;}
 .qux-screen.Start{min-height:1372px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:49px 1px 494px minmax(60px, auto) minmax(767px, auto) 1fr;background-color:#263236;height:100%;}
-.Start .Box{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#1d2126;grid-column-start:1;grid-column-end:2;grid-row-start:1;grid-row-end:3;display:grid;grid-template-columns:minmax(0,1fr) 159px 1.1% 30px 3.1%;grid-template-rows:10px 3px 27px 1fr;}
-.Start .Image2{grid-column-start:4;grid-column-end:5;grid-row-start:2;grid-row-end:4;z-index:5;border:0px solid #333333;background-image:url(https://quant-ux.com/rest/images/a2aa10aF3wiUWs0bUPvP4HmiGrazOZFaTsw02DxbsLLjXxlHQNfdjO9FEOeS//645a61d103e7a20038ad3986/a2aa10aUJbvynlHeL5agH2gcb6XhOtT2Kr0O15w2yaXEOc9qoI9waF2TjfLy.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
+.Start .Image2{grid-column-start:4;grid-column-end:5;grid-row-start:2;grid-row-end:4;z-index:5;border:0px solid #333333;background-image:url(@/assets/img/discord.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .Start .Label{color:#ffffff;text-align:right;font-family:Roboto, " sans-serif";font-size:16px;letter-spacing:0px;line-height:1;border:0px solid transparent;grid-column-start:2;grid-column-end:3;grid-row-start:3;grid-row-end:4;z-index:6;}
 .Start .Label:hover{transition:all 0.2s;text-decoration:underline;}
 .Start .Box1{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#1d2126;grid-column-start:1;grid-column-end:2;grid-row-start:4;grid-row-end:5;z-index:1;display:grid;grid-template-columns:4.7% 30px 3.1% 90px 3.1% 20px 67px 3px minmax(0,1fr);grid-template-rows:15px 3px 25px 2px 1fr;}

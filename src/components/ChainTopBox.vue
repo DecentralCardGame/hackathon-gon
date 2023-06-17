@@ -3,56 +3,24 @@
     <div class="qux-container qux-element qux-action Image5"
         :style="getBackground()"
     >    
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action LabelNumber">
+        <div class="qux-label qux-element qux-action LabelNumber">
             <span class="qux-common-label">{{id}}
             </span>
-        </a>
-        
-        <!--a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label3">
-            <span class="qux-common-label">Chain
-            </span>
-        </a-->
+        </div>
         <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action LabelTitle">
             <span class="qux-common-label">{{title}}
             </span>
         </a>
-            <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action LabelLink">
-                <span class="qux-common-label">View NFTs
-                </span>
-            </a>
-        <!--
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label5">
-            <span class="qux-common-label">NUMBER
+        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action LabelLink">
+            <span class="qux-common-label">View NFTs
             </span>
         </a>
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label6">
-            <span class="qux-common-label">NUMBER
-            </span>
-        </a>
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label7">
-            <span class="qux-common-label">1
-            </span>
-        </a>
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label8">
-            <span class="qux-common-label">ATTACKERS
-            </span>
-        </a>
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label9">
-            <span class="qux-common-label">DEFENDERS
-            </span>
-        </a>
-        <a href="#/Start_Detailed_View_1.html" class="qux-label qux-element qux-action Label10">
-            <span class="qux-common-label">captured chains
-            </span>
-        </a>
-        -->
         <div class="qux-container qux-element Group_88">
             <div class="qux-container qux-element qux-template-Circle Circle">
                 <div class="qux-container qux-element qux-template-Circle1 Circle1">
                     <div class="qux-image qux-element qux-template-Image6" 
                         :style="getLogo()"
                     >
-
                     </div>
                 </div>
             </div>
