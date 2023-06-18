@@ -1,5 +1,5 @@
 <template>
-<router-link :to="'/ChainDetails/'+title">
+<router-link :to="{ path: '/ChainDetails/'+title+'/'+isCaptured() }" >
     <div class="qux-container qux-element qux-action Image5"
         :style="getBackground()"
     >    
@@ -63,8 +63,10 @@ export default {
   mounted () {
   },
   methods: {
+    isCaptured () {
+        return this.captured.length > 0
+    },
     capturedClass () {
-        console.log("captured", this.captured.length)
         if (this.captured.length > 0)
             return "qux-template-Circle-captured"
         else

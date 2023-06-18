@@ -41,7 +41,7 @@ export default {
         this.isMyNFTsVisible = true
       }
       else if (to.name == "ChainDetails") {
-        console.log("params", this.$route.params.name)
+        console.log("params", this.$route.params)
         this.isLeaderboardVisible = false
         this.isChainDetailsVisible = true
         this.isMyNFTsVisible = false

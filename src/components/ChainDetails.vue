@@ -5,7 +5,7 @@
                 <span class="qux-common-label">{{$route.params.name}}
                 </span>
             </div>
-            <div class="qux-container qux-element qux-template-Circle Circle Group_88">
+            <div class="qux-container qux-element Circle Group_88" :class="capturedClass()">
                 <div class="qux-container qux-element qux-template-Circle1 Circle1">
                     <div class="qux-image qux-element qux-template-Image6" 
                         :style="getLogo()"
@@ -127,6 +127,14 @@ export default {
     this.getNFTs()
   },
   methods: {
+    capturedClass () {
+        if (this.$route.params.captured == "true") {
+            return "qux-template-Circle-captured"
+        }
+        else {
+            return "qux-template-Circle"
+        }  
+    },
     getTopRightIcon(index) {
         if (this.NFTs[index].alive == false)
             return require('@/assets/img/dead.png')

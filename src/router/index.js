@@ -18,7 +18,7 @@ const routes = [
     component: Start
   },
   {
-    path: '/ChainDetails/:name',
+    path: '/ChainDetails/:name/:captured',
     name: 'ChainDetails',
     component: Start
   },
