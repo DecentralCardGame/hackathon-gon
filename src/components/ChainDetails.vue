@@ -5,13 +5,11 @@
                 <span class="qux-common-label">{{$route.params.name}}
                 </span>
             </div>
-
             <div class="qux-container qux-element qux-template-Circle Circle Group_88">
                 <div class="qux-container qux-element qux-template-Circle1 Circle1">
                     <div class="qux-image qux-element qux-template-Image6" 
                         :style="getLogo()"
                     >
-
                     </div>
                 </div>
             </div>
@@ -28,7 +26,6 @@
                 </div>
                 <div class="nft-info" 
                     v-if="selectedNFT">
-
                     <div>
                       <img v-if="!isVideo(selectedNFT.imageUrl)" 
                           class="full-nftimage"
@@ -40,7 +37,6 @@
                           :src="selectedNFT.imageUrl" type="video/mp4"
                       />
                     </div>
-
                     <label class="qux-label">
                       <span class="oneliner">
                         <b>Name</b>
@@ -96,13 +92,14 @@
                     <img class="top-right-icon"
                         :src="getTopRightIcon(index)"
                     />
-                    <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
+                    <img v-if="!isVideo(nft.imageUrl)"
+                        :class="selectionBorders(index)"
                         :id="index"
                         :src="nft.imageUrl"
                     />
                     <video autoplay
                         v-if="isVideo(nft.imageUrl)" 
-                        class="nftimage"
+                        :class="selectionBorders(index)"
                         :id="index"
                         :src="nft.imageUrl" type="video/mp4"
                     />
@@ -149,6 +146,12 @@ export default {
         return "Alive and defending"
       else
         return "Alive and attacking"
+    },
+    selectionBorders(index) {
+        if (this.selectedNFT && this.selectedNFT.tokenId == this.NFTs[index].tokenId)
+            return "nftimage-selected"
+        else
+            return "nftimage"
     },
     isVideo(src) {
       return src.endsWith(".mp4")
@@ -198,13 +201,6 @@ export default {
 <style scoped lang="scss">
 .oneliner {
   display: block;
-}
-.nftimage{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    list-style-type: none;  
-
 }
 
 .MyNFTs .BG{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#263236;grid-column-start:1;grid-column-end:2;grid-row-start:5;grid-row-end:6;z-index:11;display:grid;grid-template-columns:minmax(0,1fr) 280px 1% 211px 13px 642px 1px minmax(0,1fr);grid-template-rows:25px 29px 22px 69px 25px minmax(559px, auto) 1fr;}

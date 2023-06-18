@@ -19,6 +19,7 @@
         <ChainTopBox
             :title="chain.name"
             :id="pos"
+            :captured="chain.capturedBy"
         />
     </div>
 </template>

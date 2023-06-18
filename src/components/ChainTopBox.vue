@@ -16,7 +16,7 @@
             </span>
         </a>
         <div class="qux-container qux-element Group_88">
-            <div class="qux-container qux-element qux-template-Circle Circle">
+            <div class="qux-container qux-element Circle" :class="capturedClass()">
                 <div class="qux-container qux-element qux-template-Circle1 Circle1">
                     <div class="qux-image qux-element qux-template-Image6" 
                         :style="getLogo()"
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'Chain Top Box',
   data() {
@@ -55,11 +53,23 @@ export default {
         type: String,
         default: null
     },
-    
+    captured: {
+        type: Array,
+        default () {
+            return []
+        }
+    },
   },
   mounted () {
   },
   methods: {
+    capturedClass () {
+        console.log("captured", this.captured.length)
+        if (this.captured.length > 0)
+            return "qux-template-Circle-captured"
+        else
+            return "qux-template-Circle"
+    },
     getLogo () {
         if (this.title == "Omniflix")
             return {

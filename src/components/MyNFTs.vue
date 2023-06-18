@@ -107,13 +107,14 @@
                     <img class="top-right-icon"
                         :src="getTopRightIcon(index)"
                     />
-                    <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
+                    <img v-if="!isVideo(nft.imageUrl)" 
+                        :class="selectionBorders(index)"
                         :id="index"
                         :src="nft.imageUrl"
                     />
                     <video autoplay
                         v-if="isVideo(nft.imageUrl)" 
-                        class="nftimage"
+                        :class="selectionBorders(index)"
                         :id="index"
                         :src="nft.imageUrl" type="video/mp4"
                     />
@@ -155,6 +156,12 @@ export default {
     this.chainwarsData()
   },
   methods: {
+    selectionBorders(index) {
+        if (this.selectedNFT && this.selectedNFT.tokenId == this.NFTs[index].tokenId)
+            return "nftimage-selected"
+        else
+            return "nftimage"
+    },
     getTopRightIcon(index) {
         if (this.NFTs[index].alive == false)
             return require('@/assets/img/dead.png')
@@ -343,11 +350,6 @@ button:active {
 
 .Grid{color:#333333;border:0px solid #333333;grid-column-start:4;grid-column-end:12;grid-row-start:2;grid-row-end:7;z-index:62;display:flex;flex-wrap:wrap;}
 
-.nftimage{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
 body{margin:0px;font-family:'Helvetica Neue', 'Helvetica', sans-serif;}
 div{margin:0px;}
 </style>

@@ -68,6 +68,20 @@ export default {
 .ImageDead{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/defender.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 .ImageNews{width:20px;margin-left:auto;margin-right:auto;height:20px;margin-top:0px;border:0px solid #333333;background-image:url(@/assets/img/news.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
 
+.nftimage{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    list-style-type: none;  
+}
+.nftimage-selected{
+    width: 194px;
+    height: 194px;
+    object-fit: cover;
+    list-style-type: none;
+    border: solid black 3px;
+}
+
 .qux-repeater{overflow:auto;}
 .qux-repeater-child{  
     
@@ -107,6 +121,8 @@ export default {
 }
 /*! CSS Used from: Embedded */
 .qux-template-Circle{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#a8d324;}
+.qux-template-Circle-captured{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#990000;}
+
 .qux-template-Circle1{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;border:0px solid #333333;border-radius:400px;background-color:#ffffff;}
 .qux-screen.Start{min-height:1372px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:49px 1px 494px minmax(60px, auto) minmax(767px, auto) 1fr;background-color:#263236;height:100%;}
 .Start .Image2{grid-column-start:4;grid-column-end:5;grid-row-start:2;grid-row-end:4;z-index:5;border:0px solid #333333;background-image:url(@/assets/img/discord.png);background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}
