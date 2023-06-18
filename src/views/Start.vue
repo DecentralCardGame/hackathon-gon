@@ -1,5 +1,5 @@
 <template>
-<noscript><strong>We're sorry but luisa-vue3-starter doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
+<noscript><strong>We're sorry but ChainWars doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
   <div id="app" data-v-app="">
     <div class="qux">
         <div class="qux-container qux-element Start qux-screen">

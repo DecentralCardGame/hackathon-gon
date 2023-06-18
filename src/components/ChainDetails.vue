@@ -96,10 +96,9 @@
                     <img class="top-right-icon"
                         :src="getTopRightIcon(index)"
                     />
-                
                     <img v-if="!isVideo(nft.imageUrl)" class="nftimage"
-                    :id="index"
-                    :src="nft.imageUrl"
+                        :id="index"
+                        :src="nft.imageUrl"
                     />
                     <video autoplay
                         v-if="isVideo(nft.imageUrl)" 
@@ -200,6 +199,14 @@ export default {
 .oneliner {
   display: block;
 }
+.nftimage{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    list-style-type: none;  
+
+}
+
 .MyNFTs .BG{color:#ffffff;text-align:left;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;font-size:14px;letter-spacing:0px;line-height:1.4;border:0px solid #333333;background-color:#263236;grid-column-start:1;grid-column-end:2;grid-row-start:5;grid-row-end:6;z-index:11;display:grid;grid-template-columns:minmax(0,1fr) 280px 1% 211px 13px 642px 1px minmax(0,1fr);grid-template-rows:25px 29px 22px 69px 25px minmax(559px, auto) 1fr;}
 
 .Image5{width:280px;margin-left:auto;margin-right:auto;height:120px;margin-top:0px;display:grid;grid-template-columns:4.6% 39px 4.6% minmax(0,1fr) 4.6% 26px 3px 12px 23px 41px 5.4%;grid-template-rows:18px 11px 2px 10px 13px 11px 11px 1px 10px 2px 11px 1fr;border:0px solid #333333;background-size:100%;background-position:0px 0px;background-repeat:no-repeat;}

@@ -58,8 +58,8 @@ export default {
         },
     },
     mounted () {
-        this.defenders = R.keys(this.chain.attackers).length
-        this.attackers = R.keys(this.chain.defenders).length
+        this.defenders = R.keys(this.chain.defenders).length
+        this.attackers = R.keys(this.chain.attackers).length
     },
     methods: {
         shortLog() {
